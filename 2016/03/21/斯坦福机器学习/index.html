@@ -61,6 +61,12 @@
 
 
 1. Introduction
+2. Gradient descent algorithm
+
+2.1. Derivative term
+2.2. Understanding the algorithm
+
+
 
 
 
@@ -68,15 +74,7 @@
 1 Introduction
 
 
-Hypothesis:  \(h_\theta(x) = \theta_0 + \theta_1x\)
-
-
-
-Parameters: \(\theta_0,\theta_1\)
-
-
-
-Cost Function: \(J(\theta_0,\theta_1) = \frac{1}{2">
+Hypothesis:  \(h_\theta(x) = \theta_0 + \theta_1x\)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linear Regression">
 <meta property="og:url" content="/2016/03/21/斯坦福机器学习/index.html">
@@ -85,6 +83,12 @@ Cost Function: \(J(\theta_0,\theta_1) = \frac{1}{2">
 
 
 1. Introduction
+2. Gradient descent algorithm
+
+2.1. Derivative term
+2.2. Understanding the algorithm
+
+
 
 
 
@@ -92,22 +96,20 @@ Cost Function: \(J(\theta_0,\theta_1) = \frac{1}{2">
 1 Introduction
 
 
-Hypothesis:  \(h_\theta(x) = \theta_0 + \theta_1x\)
-
-
-
-Parameters: \(\theta_0,\theta_1\)
-
-
-
-Cost Function: \(J(\theta_0,\theta_1) = \frac{1}{2">
-<meta property="og:updated_time" content="2016-03-21T09:52:09.000Z">
+Hypothesis:  \(h_\theta(x) = \theta_0 + \theta_1x\)">
+<meta property="og:updated_time" content="2016-03-21T10:02:37.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linear Regression">
 <meta name="twitter:description" content="Table of Contents
 
 
 1. Introduction
+2. Gradient descent algorithm
+
+2.1. Derivative term
+2.2. Understanding the algorithm
+
+
 
 
 
@@ -115,15 +117,7 @@ Cost Function: \(J(\theta_0,\theta_1) = \frac{1}{2">
 1 Introduction
 
 
-Hypothesis:  \(h_\theta(x) = \theta_0 + \theta_1x\)
-
-
-
-Parameters: \(\theta_0,\theta_1\)
-
-
-
-Cost Function: \(J(\theta_0,\theta_1) = \frac{1}{2">
+Hypothesis:  \(h_\theta(x) = \theta_0 + \theta_1x\)">
 
 
 
@@ -305,6 +299,12 @@ Cost Function: \(J(\theta_0,\theta_1) = \frac{1}{2">
 <div id="text-table-of-contents">
 <ul>
 <li><a href="#sec-1">1. Introduction</a></li>
+<li><a href="#sec-2">2. Gradient descent algorithm</a>
+<ul>
+<li><a href="#sec-2-1">2.1. Derivative term</a></li>
+<li><a href="#sec-2-2">2.2. Understanding the algorithm</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -326,6 +326,112 @@ Cost Function: \(J(\theta_0,\theta_1) = \frac{1}{2m}\sum_{i=1}^{m}\qquad(h_\thet
 <p>
 Goal:        \(minimize_{\theta_0,\theta_1}J(\theta_0,\theta_1)\)
 </p>
+</div>
+</div>
+
+
+
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Gradient descent algorithm</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+\(\theta_j := \theta_j - \alpha\frac{\alpha}{\alpha\theta_j}J(\theta_{0},\theta_{1})\) (for j=0 and j=1)
+</p>
+<ul class="org-ul">
+<li>\(\alph\) &#x662F; learning rate &#x4F60;&#x53EF;&#x5DF2;&#x9009;&#x62E9;&#x3B1; &#x7684;&#x5927;&#x5C0F;
+<ul class="org-ul">
+<li>&#x5982;&#x679C;&#x3B1; &#x592A;&#x5927;&#xFF0C;&#x53EF;&#x4EE5;&#x51CF;&#x5C11; gradient descent &#x7684;&#x8BA1;&#x7B97;&#x91CF;&#xFF0C;&#x4F1A;&#x6709;&#x5DEE;&#x9519;
+</li>
+<li>&#x5982;&#x679C;&#x3B1; &#x592A;&#x5C0F;&#xFF0C;&#x8BA1;&#x7B97;&#x6B65;&#x9AA4;&#x589E;&#x591A;&#xFF0C;&#x4F46;&#x4E0D;&#x4F1A;&#x4EA7;&#x751F;&#x5DEE;&#x9519;
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Derivative term</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+\(\frac{\vartheta}{\vartheta\theta}J(\theta_{0},\theta_{1})\) (for j=0 &#x548C; j=1)
+</p>
+<ul class="org-ul">
+<li>For j=0 and j=1 &#x610F;&#x601D;&#x662F;&#x540C;&#x65F6;&#x5904;&#x7406;\(\theta_{0},\theta_{1}\)
+</li>
+</ul>
+<p>
+temp0 := \(\theta_{0} - \alpha\frac{\vartheta}{\vartheta\theta_{0}}J(\theta_{0},\theta_{1})\)
+</p>
+
+<p>
+temp1 := \(\theta_{1} - \alpha\frac{\vartheta}{\vartheta\theta_{1}}J(\theta_{0},\theta_{1})\)
+</p>
+<ul class="org-ul">
+<li>&#x8BA1;&#x7B97;&#x53F3;&#x8FB9;$&#x3B8;<sub>0</sub>,&#x3B8;<sub>1</sub>)&#x7684;&#x503C;
+</li>
+<li>&#x518D;&#x540C;&#x65F6;&#x8D4B;&#x503C;
+</li>
+</ul>
+<p>
+\(\theta_{0} := temp0\)
+\(\theta_{1} := temp1\)
+&#x5982;&#x679C;&#x4E0D;&#x540C;&#x65F6;&#x8BA1;&#x7B97;&#x7684;&#x8BDD;&#xFF0C;&#x5C31;&#x4E0D;&#x662F; Gradient desent &#x7B97;&#x6CD5;
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> Understanding the algorithm</h3>
+<div class="outline-text-3" id="text-2-2">
+<ul class="org-ul">
+<li>min\(\theta_{1}J(\theta_{1})\) &#x5176;&#x4E2D;$&#x3B8;<sub>1</sub>$&#x662F;&#x4E2A;&#x6570;&#x5B57;
+</li>
+<li>&#x7B97;&#x6CD5;&#x4E2D;&#x6709;&#x4E24;&#x4E2A;&#x91CD;&#x8981;&#x7684;&#x503C;
+<ul class="org-ul">
+<li>\(\alpha\) &#x5373; learning rate
+</li>
+<li>Derivative term
+</li>
+</ul>
+</li>
+<li>Partial derivative &#x548C; derivative
+<ul class="org-ul">
+<li>&#x5F53;&#x6709;&#x5F88;&#x591A;&#x53D8;&#x91CF;&#x65F6;&#xFF0C;&#x5BF9;&#x5176;&#x4E2D;&#x4E00;&#x4E2A;&#x6C42;&#x5BFC;  Partial derivative
+</li>
+<li>&#x5F53;&#x6709;&#x5F88;&#x591A;&#x53D8;&#x91CF;&#x65F6;&#xFF0C;&#x5BF9;&#x6240;&#x6709;&#x7684;&#x53D8;&#x91CF;&#x6C42;&#x5BFC;  derivative
+</li>
+</ul>
+</li>
+<li>Derivative term
+</li>
+</ul>
+<p>
+\(\frac{d}{d\theta_{j}}J(\theta_{1})\)
+</p>
+<ul class="org-ul">
+<li>$&#x3B8;<sub>1</sub>$&#x8FD9;&#x70B9;&#x7684;&#x5207;&#x7EBF;
+</li>
+<li>&#x5230;&#x5C40;&#x90E8;&#x6700;&#x5C0F;&#x503C;&#x7684;&#x65F6;&#x5019;
+<ul class="org-ul">
+<li>derivative = 0
+</li>
+<li>alpha*0 = 0
+</li>
+<li>\(\theta_{1} = \theta_{1} - 0\)
+</li>
+<li>\(\theta_{1}\) &#x4FDD;&#x6301;&#x4E0D;&#x53D8; \(\theta\) 
+</li>
+</ul>
+</li>
+<li>&#x5230;&#x5168;&#x5C40;&#x6700;&#x5C0F;&#x77E5;&#x9053;&#x65F6;&#x5019;
+<ul class="org-ul">
+<li>Means as the algorithm runs you take smaller steps as you approach the minimum
+</li>
+<li>So no need to change alpha over time
+</li>
+</ul>
+</li>
+</ul>
+</div>
 </div>
 </div>
 
@@ -467,7 +573,7 @@ Goal:        \(minimize_{\theta_0,\theta_1}J(\theta_0,\theta_1)\)
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">Table of Contents</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sec-1"><span class="nav-number">2.</span> <span class="nav-text">1 Introduction</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">Table of Contents</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sec-1"><span class="nav-number">2.</span> <span class="nav-text">1 Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sec-2"><span class="nav-number">3.</span> <span class="nav-text">2 Gradient descent algorithm</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sec-2-1"><span class="nav-number">3.1.</span> <span class="nav-text">2.1 Derivative term</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sec-2-2"><span class="nav-number">3.2.</span> <span class="nav-text">2.2 Understanding the algorithm</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
