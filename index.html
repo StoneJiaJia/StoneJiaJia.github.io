@@ -350,6 +350,7 @@
 </ul>
 </li>
 <li><a href="#sec-3">3. Gradient desent code</a></li>
+<li><a href="#sec-4">4. Gradient desent code</a></li>
 </ul>
 </div>
 </div>
@@ -485,6 +486,67 @@ temp1 := \(\theta_{1} - \alpha\frac{\vartheta}{\vartheta\theta_{1}}J(\theta_{0},
 <div class="org-src-container">
 
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="comment"># y = mx + b</span></span><br><span class="line"><span class="comment"># m is slope, b is y-intercept</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">compute_error_for_line_given_points</span><span class="params">(b, m, points)</span>:</span></span><br><span class="line">    totalError = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, len(points)):</span><br><span class="line">	x = points[i, <span class="number">0</span>]</span><br><span class="line">	y = points[i, <span class="number">1</span>]</span><br><span class="line">	totalError += (y - (m * x + b)) ** <span class="number">2</span></span><br><span class="line">    <span class="keyword">return</span> totalError / float(len(points))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">step_gradient</span><span class="params">(b_current, m_current, points, learningRate)</span>:</span></span><br><span class="line">    b_gradient = <span class="number">0</span></span><br><span class="line">    m_gradient = <span class="number">0</span></span><br><span class="line">    N = float(len(points))</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, len(points)):</span><br><span class="line">	x = points[i, <span class="number">0</span>]</span><br><span class="line">	y = points[i, <span class="number">1</span>]</span><br><span class="line">	b_gradient += -(<span class="number">2</span>/N) * (y - ((m_current * x) + b_current))</span><br><span class="line">	m_gradient += -(<span class="number">2</span>/N) * x * (y - ((m_current * x) + b_current))</span><br><span class="line">    new_b = b_current - (learningRate * b_gradient)</span><br><span class="line">    new_m = m_current - (learningRate * m_gradient)</span><br><span class="line">    <span class="keyword">return</span> [new_b, new_m]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gradient_descent_runner</span><span class="params">(points, starting_b, starting_m, learning_rate, num_iterations)</span>:</span></span><br><span class="line">    b = starting_b</span><br><span class="line">    m = starting_m</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(num_iterations):</span><br><span class="line">	b, m = step_gradient(b, m, array(points), learning_rate)</span><br><span class="line">    <span class="keyword">return</span> [b, m]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">()</span>:</span></span><br><span class="line">    points = genfromtxt(<span class="string">&quot;data.csv&quot;</span>, delimiter=<span class="string">&quot;,&quot;</span>)</span><br><span class="line">    learning_rate = <span class="number">0.0001</span></span><br><span class="line">    initial_b = <span class="number">0</span> <span class="comment"># initial y-intercept guess</span></span><br><span class="line">    initial_m = <span class="number">0</span> <span class="comment"># initial slope guess</span></span><br><span class="line">    num_iterations = <span class="number">1000</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">&quot;Starting gradient descent at b = {0}, m = {1}, error = {2}&quot;</span>.format(initial_b, initial_m, compute_error_for_line_given_points(initial_b, initial_m, points))</span><br><span class="line">    <span class="keyword">print</span> <span class="string">&quot;Running...&quot;</span></span><br><span class="line">    [b, m] = gradient_descent_runner(points, initial_b, initial_m, learning_rate, num_iterations)</span><br><span class="line">    <span class="keyword">print</span> <span class="string">&quot;After {0} iterations b = {1}, m = {2}, error = {3}&quot;</span>.format(num_iterations, b, m, compute_error_for_line_given_points(b, m, points))</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&apos;__main__&apos;</span>:</span><br><span class="line">    run()</span><br></pre></td></tr></table></figure>
+</div>
+
+<pre class="example">
+Starting gradient descent at b = 0, m = 0, error = 5565.10783448
+Running...
+After 1000 iterations b = 0.0889365199374, m = 1.47774408519, error = 112.614810116
+</pre>
+</div>
+</div>
+
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Gradient desent code</h2>
+<div class="outline-text-2" id="text-4">
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">from numpy import *
+
+# y = mx + b
+# m is slope, b is y-intercept
+def compute_error_for_line_given_points(b, m, points):
+    totalError = 0
+    for i in range(0, len(points)):
+	x = points[i, 0]
+	y = points[i, 1]
+	totalError += (y - (m * x + b)) ** 2
+    return totalError / float(len(points))
+
+def step_gradient(b_current, m_current, points, learningRate):
+    b_gradient = 0
+    m_gradient = 0
+    N = float(len(points))
+    for i in range(0, len(points)):
+	x = points[i, 0]
+	y = points[i, 1]
+	b_gradient += -(2/N) * (y - ((m_current * x) + b_current))
+	m_gradient += -(2/N) * x * (y - ((m_current * x) + b_current))
+    new_b = b_current - (learningRate * b_gradient)
+    new_m = m_current - (learningRate * m_gradient)
+    return [new_b, new_m]
+
+def gradient_descent_runner(points, starting_b, starting_m, learning_rate, num_iterations):
+    b = starting_b
+    m = starting_m
+    for i in range(num_iterations):
+	b, m = step_gradient(b, m, array(points), learning_rate)
+    return [b, m]
+
+def run():
+    points = genfromtxt(&quot;data.csv&quot;, delimiter=&quot;,&quot;)
+    learning_rate = 0.0001
+    initial_b = 0 # initial y-intercept guess
+    initial_m = 0 # initial slope guess
+    num_iterations = 1000
+    print &quot;Starting gradient descent at b = {0}, m = {1}, error = {2}&quot;.format(initial_b, initial_m, compute_error_for_line_given_points(initial_b, initial_m, points))
+    print &quot;Running...&quot;
+    [b, m] = gradient_descent_runner(points, initial_b, initial_m, learning_rate, num_iterations)
+    print &quot;After {0} iterations b = {1}, m = {2}, error = {3}&quot;.format(num_iterations, b, m, compute_error_for_line_given_points(b, m, points))
+
+if __name__ == &apos;__main__&apos;:
+    run()</span><br></pre></td></tr></table></figure>
 </div>
 
 <pre class="example">
