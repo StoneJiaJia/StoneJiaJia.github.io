@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion">
+<html class="theme-next pisces use-motion">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -63,7 +63,7 @@
 <meta property="og:url" content="http://stone2009.com/2016/03/18/19910604/index.html">
 <meta property="og:site_name" content="思義">
 <meta property="og:description" content="12345678910import statsmodels.api as smimport statsmodels.formula.api as smfimport statsmodels.graphics.api as smgimport patsy%matplotlib inlineimport matplotlib.pyplot as pltimport numpy as npimport">
-<meta property="og:updated_time" content="2016-03-21T07:04:23.000Z">
+<meta property="og:updated_time" content="2016-03-21T07:15:37.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="线性模型">
 <meta name="twitter:description" content="12345678910import statsmodels.api as smimport statsmodels.formula.api as smfimport statsmodels.graphics.api as smgimport patsy%matplotlib inlineimport matplotlib.pyplot as pltimport numpy as npimport">
@@ -73,7 +73,7 @@
 <script type="text/javascript" id="hexo.configuration">
   var NexT = window.NexT || {};
   var CONFIG = {
-    scheme: 'Muse',
+    scheme: 'Pisces',
     sidebar: {"position":"left","display":"post"},
     fancybox: true,
     motion: true,
@@ -244,8 +244,8 @@
 
       
         <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import statsmodels.api as sm</span><br><span class="line">import statsmodels.formula.api as smf</span><br><span class="line">import statsmodels.graphics.api as smg</span><br><span class="line">import patsy</span><br><span class="line">%matplotlib inline</span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">import numpy as np</span><br><span class="line">import pandas as pd</span><br><span class="line">from scipy import stats</span><br><span class="line">import seaborn as sns</span><br></pre></td></tr></table></figure>
-<h1 id="Statistical_models_and_patsy_formula">Statistical models and patsy formula</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">np.random.seed(123456789)</span><br><span class="line">y = np.array([1, 2, 3, 4, 5])</span><br><span class="line">x1 = np.array([6, 7, 8, 9, 10])</span><br><span class="line">x2 = np.array([11, 12, 13, 14, 15])</span><br><span class="line">X = np.vstack([np.ones(5), x1, x2, x1*x2]).T</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X</span><br></pre></td></tr></table></figure>
+<h1 id="Statistical_models_and_patsy_formula">Statistical models and patsy formula</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">np.random.seed(<span class="number">123456789</span>)</span><br><span class="line">y = np.array([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])</span><br><span class="line">x1 = np.array([<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>])</span><br><span class="line">x2 = np.array([<span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>, <span class="number">14</span>, <span class="number">15</span>])</span><br><span class="line">X = np.vstack([np.ones(<span class="number">5</span>), x1, x2, x1*x2]).T</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">X</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">beta, res, rank, sval = np.linalg.lstsq(X, y) #最小二乘法</span><br><span class="line">print beta</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">model = sm.OLS(y, X)  #普通最小二乘</span><br><span class="line">result = model.fit()  #拟合</span><br><span class="line">print result.params #各个变量的权重</span><br></pre></td></tr></table></figure>
 <p>[ -5.55555556e-01   1.88888889e+00  -8.88888889e-01  -6.66133815e-16]</p>
@@ -529,7 +529,7 @@
 <div class="theme-info">
   主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Muse
+    NexT.Pisces
   </a>
 </div>
 
@@ -582,6 +582,13 @@
 
   
   
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=0.5.0"></script>
+
+
 
   
   
