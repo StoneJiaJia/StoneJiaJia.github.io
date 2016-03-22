@@ -206,6 +206,227 @@
             
               
                 
+                <a class="post-title-link" href="/2016/03/22/MIT_Datascience1/" itemprop="url">
+                  Probability and Hashing
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-03-22T16:00:52+08:00" content="Mar 22 2016">
+              Mar 22 2016
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Hash Table</a>
+<ul>
+<li><a href="#sec-1-1">1.1. Hash functions</a></li>
+<li><a href="#sec-1-2">1.2. O(1)&#x548C; O(n)&#x662F;&#x4EC0;&#x4E48;</a></li>
+<li><a href="#sec-1-3">1.3. Hash Examples</a></li>
+<li><a href="#sec-1-4">1.4. Hash Problem</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Hash Table</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+&#x8EAB;&#x4EFD;&#x8BC1;&#x6709; 9 &#x4F4D;&#x6570;&#x7684;&#x8BDD;&#xFF0C;&#x5C31;&#x6709; \(10^{9}\) &#x79CD;&#x8868;&#x793A;&#x65B9;&#x5F0F;&#x3002;
+&#x4E00;&#x4E2A;&#x6570;&#x5B57;&#x7B49;&#x4E8E; 8 &#x4E2A;&#x5B57;&#x8282;,&#x53EA;&#x641C;&#x7D22; 20 &#x4E2A;&#x4EBA;&#x7684;&#x8BDD;&#xFF0C;&#x8981;&#x7528;&#x5230;&#x5F88;&#x591A;&#x7A7A;&#x95F4;&#x3002;
+</p>
+</div>
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Hash functions</h3>
+<div class="outline-text-3" id="text-1-1">
+<ul class="org-ul">
+<li>a large space input
+</li>
+<li>a smaller space output
+</li>
+<li>hash function is &quot;many to one&quot;
+</li>
+<li>when mapped to the same output called a collision
+</li>
+<li>good hash produce a uniform distribution
+<ul class="org-ul">
+<li>every output is equally probable
+</li>
+<li>minimizes the probability of collision
+</li>
+</ul>
+</li>
+</ul>
+<div class="org-src-container">
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">intDict</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;A dictionary with integer keys&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, numBuckets)</span>:</span></span><br><span class="line">	<span class="string">&quot;&quot;&quot;Create an empty dictionary&quot;&quot;&quot;</span></span><br><span class="line">	self.buckets = []</span><br><span class="line">	self.numBuckets = numBuckets</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(numBuckets):</span><br><span class="line">	    self.buckets.append([])</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">addEntry</span><span class="params">(self, dictKey, dictVal)</span>:</span></span><br><span class="line">	<span class="string">&quot;&quot;&quot;Assumes dictKey an int.  Adds an entry.&quot;&quot;&quot;</span></span><br><span class="line">	hashBucket = self.buckets[dictKey%self.numBuckets]</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(len(hashBucket)):</span><br><span class="line">	    <span class="keyword">if</span> hashBucket[i][<span class="number">0</span>] == dictKey:</span><br><span class="line">		hashBucket[i] = (dictKey, dictVal)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	hashBucket.append((dictKey, dictVal))</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getValue</span><span class="params">(self, dictKey)</span>:</span></span><br><span class="line">	<span class="string">&quot;&quot;&quot;Assumes dictKey an int.  Returns entry associated</span><br><span class="line">	   with the key dictKey&quot;&quot;&quot;</span></span><br><span class="line">	hashBucket = self.buckets[dictKey%self.numBuckets]</span><br><span class="line">	<span class="keyword">for</span> e <span class="keyword">in</span> hashBucket:</span><br><span class="line">	    <span class="keyword">if</span> e[<span class="number">0</span>] == dictKey:</span><br><span class="line">		<span class="keyword">return</span> e[<span class="number">1</span>]</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">	res = <span class="string">&apos;{&apos;</span></span><br><span class="line">	<span class="keyword">for</span> b <span class="keyword">in</span> self.buckets:</span><br><span class="line">	    <span class="keyword">for</span> t <span class="keyword">in</span> b:</span><br><span class="line">		res = res + str(t[<span class="number">0</span>]) + <span class="string">&apos;:&apos;</span> + str(t[<span class="number">1</span>]) + <span class="string">&apos;,&apos;</span></span><br><span class="line">	<span class="keyword">return</span> res[:-<span class="number">1</span>] + <span class="string">&apos;}&apos;</span> <span class="comment">#res[:-1] removes the last comma</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">D = intDict(<span class="number">29</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">20</span>):</span><br><span class="line">    <span class="comment">#choose a random int in range(10**5)</span></span><br><span class="line">    key = random.choice(range(<span class="number">10</span>**<span class="number">5</span>))</span><br><span class="line">    D.addEntry(key, i)</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> <span class="string">&apos;\n&apos;</span>, <span class="string">&apos;The buckets are:&apos;</span></span><br><span class="line"><span class="keyword">for</span> hashBucket <span class="keyword">in</span> D.buckets: <span class="comment">#violates abstraction barrier</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">&apos;  &apos;</span>, hashBucket</span><br></pre></td></tr></table></figure>
+</div>
+
+<pre class="example">
+The buckets are:
+   []
+   [(6091, 12)]
+   [(86016, 7), (48983, 8), (39529, 15)]
+   [(69632, 10)]
+   []
+   []
+   [(13114, 5)]
+   []
+   [(21903, 1), (26369, 14)]
+   []
+   []
+   [(4274, 4), (71873, 11), (67407, 19)]
+   [(73730, 0)]
+   []
+   [(3581, 6), (83128, 16)]
+   [(57841, 2), (39484, 18)]
+   []
+   [(62889, 17)]
+   []
+   [(86642, 3)]
+   []
+   [(80061, 9)]
+   []
+   []
+   []
+   []
+   []
+   [(8727, 13)]
+   []
+</pre>
+
+<p>
+Hash table size = 10 buckets; number of unique insertions = 10
+</p>
+
+<p>
+$$ Average length of list = \frac{Hash table size}{number of unique insertions} $$
+&#x8FD8;&#x6709;&#x4E00;&#x4E9B;&#x6BD4; List &#x66F4;&#x6709;&#x6548;&#x7387;&#x7684;&#x65B9;&#x6CD5;&#x3002;
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><span class="section-number-3">1.2</span> O(1)&#x548C; O(n)&#x662F;&#x4EC0;&#x4E48;</h3>
+</div>
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Hash Examples</h3>
+<div class="outline-text-3" id="text-1-3">
+<ul class="org-ul">
+<li>The range of the hash function is range(n)
+</li>
+<li>The number of insertions is K
+</li>
+<li>The hash function produce a perfectly uniform distribution
+</li>
+</ul>
+<p>
+The probability of $
+$ hash(k) = \frac{1}{n}$$
+&#x81F3;&#x5C11;&#x53D1;&#x751F;&#x4E00;&#x6B21; collison &#x7684;&#x6982;&#x7387;&#x6709;&#x591A;&#x5927;&#xFF1F;
+&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x7C7B;&#x4F3C;&#x4E8E;&#x4E24;&#x4E2A;&#x540C;&#x4E00;&#x989C;&#x8272;&#x7684;&#x7403;&#xFF0C;&#x5728; n &#x4E2A; sample size &#x88AB;&#x53D6;&#x51FA;&#xFF0C;&#x540C;&#x65F6;&#x53D6;&#x51FA;&#x7684;&#x6982;&#x7387;&#x662F;&#x591A;&#x5C11;&#xFF1F;
+&#x6216;&#x8005;&#x7C7B;&#x4F3C;&#x4E8E; 100 &#x4E2A;&#x4EBA;&#x4E2D;&#xFF0C;&#x751F;&#x65E5;&#x76F8;&#x540C;&#x7684;&#x6982;&#x7387;&#x3002;
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4"><span class="section-number-3">1.4</span> Hash Problem</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+&#x5047;&#x8BBE;&#x6709; 1000 &#x4E2A; buckets,&#x548C; 50 &#x4E2A;&#x7403;&#xFF0C;&#x4E24;&#x4E2A;&#x7403;&#x5728;&#x540C;&#x4E00;&#x4E2A; bucket &#x7684;&#x6982;&#x7387;
+</p>
+<div class="org-src-container">
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">intDict</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;A dictionary with integer keys&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, numBuckets)</span>:</span></span><br><span class="line">	<span class="string">&quot;&quot;&quot;Create an empty dictionary&quot;&quot;&quot;</span></span><br><span class="line">	self.buckets = []</span><br><span class="line">	self.numBuckets = numBuckets</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(numBuckets):</span><br><span class="line">	    self.buckets.append([])</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">addEntry</span><span class="params">(self, dictKey, dictVal)</span>:</span></span><br><span class="line">	<span class="string">&quot;&quot;&quot;Assumes dictKey an int.  Adds an entry.&quot;&quot;&quot;</span></span><br><span class="line">	hashBucket = self.buckets[dictKey%self.numBuckets]</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(len(hashBucket)):</span><br><span class="line">	    <span class="keyword">if</span> hashBucket[i][<span class="number">0</span>] == dictKey:</span><br><span class="line">		hashBucket[i] = (dictKey, dictVal)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	hashBucket.append((dictKey, dictVal))</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">getValue</span><span class="params">(self, dictKey)</span>:</span></span><br><span class="line">	<span class="string">&quot;&quot;&quot;Assumes dictKey an int.  Returns entry associated</span><br><span class="line">	   with the key dictKey&quot;&quot;&quot;</span></span><br><span class="line">	hashBucket = self.buckets[dictKey%self.numBuckets]</span><br><span class="line">	<span class="keyword">for</span> e <span class="keyword">in</span> hashBucket:</span><br><span class="line">	    <span class="keyword">if</span> e[<span class="number">0</span>] == dictKey:</span><br><span class="line">		<span class="keyword">return</span> e[<span class="number">1</span>]</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">	res = <span class="string">&apos;{&apos;</span></span><br><span class="line">	<span class="keyword">for</span> b <span class="keyword">in</span> self.buckets:</span><br><span class="line">	    <span class="keyword">for</span> t <span class="keyword">in</span> b:</span><br><span class="line">		res = res + str(t[<span class="number">0</span>]) + <span class="string">&apos;:&apos;</span> + str(t[<span class="number">1</span>]) + <span class="string">&apos;,&apos;</span></span><br><span class="line">	<span class="keyword">return</span> res[:-<span class="number">1</span>] + <span class="string">&apos;}&apos;</span> <span class="comment">#res[:-1] removes the last comma</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">collision_prob</span><span class="params">(numBuckets, numInsertions)</span>:</span></span><br><span class="line">    <span class="string">&apos;&apos;&apos;</span><br><span class="line">    Given the number of buckets and the number of items to insert, </span><br><span class="line">    calculates the probability of a collision.</span><br><span class="line">    &apos;&apos;&apos;</span></span><br><span class="line">    prob = <span class="number">1.0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, numInsertions):</span><br><span class="line">	prob = prob * ((numBuckets - i) / float(numBuckets))</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span> - prob</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sim_insertions</span><span class="params">(numBuckets, numInsertions)</span>:</span></span><br><span class="line">    <span class="string">&apos;&apos;&apos;</span><br><span class="line">    Run a simulation for numInsertions insertions into the hash table.</span><br><span class="line">    &apos;&apos;&apos;</span></span><br><span class="line">    choices = range(numBuckets)</span><br><span class="line">    used = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(numInsertions):</span><br><span class="line">	hashVal = random.choice(choices)</span><br><span class="line">	<span class="keyword">if</span> hashVal <span class="keyword">in</span> used:</span><br><span class="line">	    <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">	    used.append(hashVal)</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">observe_prob</span><span class="params">(numBuckets, numInsertions, numTrials)</span>:</span></span><br><span class="line">    <span class="string">&apos;&apos;&apos;</span><br><span class="line">    Given the number of buckets and the number of items to insert, </span><br><span class="line">    runs a simulation numTrials times to observe the probability of a collision.</span><br><span class="line">    &apos;&apos;&apos;</span></span><br><span class="line">    probs = []</span><br><span class="line">    <span class="keyword">for</span> t <span class="keyword">in</span> range(numTrials):</span><br><span class="line">	probs.append(sim_insertions(numBuckets, numInsertions))</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span> - sum(probs)/float(numTrials)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    hash_table = intDict(<span class="number">25</span>)</span><br><span class="line">    hash_table.addEntry(<span class="number">15</span>, <span class="string">&apos;a&apos;</span>)</span><br><span class="line"> <span class="comment">#   random.seed(1) # Uncomment for consistent results</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">20</span>):</span><br><span class="line">       hash_table.addEntry(int(random.random() * (<span class="number">10</span> ** <span class="number">9</span>)), i)</span><br><span class="line">    hash_table.addEntry(<span class="number">15</span>, <span class="string">&apos;b&apos;</span>)</span><br><span class="line">    <span class="keyword">print</span> hash_table.buckets  <span class="comment">#evil</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">&apos;\n&apos;</span>, <span class="string">&apos;hash_table =&apos;</span>, hash_table</span><br><span class="line">    <span class="keyword">print</span> hash_table.getValue(<span class="number">15</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> collision_prob(<span class="number">1000</span>,<span class="number">50</span>)</span><br></pre></td></tr></table></figure>
+</div>
+
+<pre class="example">
+0.71226865688
+</pre>
+</div>
+</div>
+</div>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/03/21/Untitled/" itemprop="url">
                   未命名
                 </a>
@@ -1336,7 +1557,7 @@ rdd = sc.<span class="function"><span class="title">parallelize</span><span clas
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-count">8</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
