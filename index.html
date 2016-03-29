@@ -206,6 +206,259 @@
             
               
                 
+                <a class="post-title-link" href="/2016/03/30/Boken_basic(1)/" itemprop="url">
+                  Bokeh Basic(1)
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-03-30T04:22:00+08:00" content="Mar 30 2016">
+              Mar 30 2016
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Introduction</a></li>
+<li><a href="#sec-2">2. How to creat Data visualization</a></li>
+<li><a href="#sec-3">3. Plotting Example</a></li>
+<li><a href="#sec-4">4. Bokeh Style</a>
+<ul>
+<li><a href="#sec-4-1">4.1. figure &#x753B;&#x5E03;</a></li>
+<li><a href="#sec-4-2">4.2. Line</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+title: Bokeh Basic(1)
+tags:
+</p>
+<ul class="org-ul">
+<li>python
+</li>
+<li>data visualization
+</li>
+</ul>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Introduction</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Bokeh &#x662F; python &#x7528;&#x6765;&#x6570;&#x636E;&#x53EF;&#x89C6;&#x5316;&#x7684;&#x4E00;&#x4E2A;&#x5E93;&#xFF0C;&#x4E0D;&#x540C;&#x4E8E; matplotlib&#xFF0C;&#x4ED6;&#x8F93;&#x51FA;&#x7684;&#x56FE;&#x5F62;&#x683C;&#x5F0F;&#x662F; HTML&#xFF0C;&#x7C7B;&#x4F3C;&#x4E8E; d3.js &#x7684;&#x98CE;&#x683C;&#xFF0C;&#x8FD8;&#x53EF;&#x4EE5;&#x7528;&#x6765;&#x4EA4;&#x4E92;&#x4F7F;&#x7528;&#x3002;
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> How to creat Data visualization</h2>
+<div class="outline-text-2" id="text-2">
+<ul class="org-ul">
+<li>&#x51C6;&#x5907;&#x6570;&#x636E;
+</li>
+<li>&#x9009;&#x62E9;&#x4F60;&#x8981;&#x8F93;&#x51FA;&#x7684;&#x6837;&#x5F0F;
+<ul class="org-ul">
+<li>output<sub>file</sub>
+</li>
+<li>output<sub>notebook</sub>
+</li>
+</ul>
+</li>
+<li>&#x5EFA;&#x7ACB; x &#x8F74;&#xFF0C;y &#x8F74;
+</li>
+<li>&#x8F93;&#x51FA;&#x56FE;&#x7247;
+</li>
+</ul>
+<div class="org-src-container">
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> bokeh.plotting <span class="keyword">import</span> figure, output_notebook, show</span><br><span class="line"></span><br><span class="line"><span class="comment"># prepare some data</span></span><br><span class="line">x = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]</span><br><span class="line">y = [<span class="number">6</span>, <span class="number">7</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">5</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># output to static HTML file</span></span><br><span class="line">output_notebook()</span><br><span class="line"></span><br><span class="line"><span class="comment"># create a new plot with a title and axis labels</span></span><br><span class="line">p = figure(title=<span class="string">&quot;simple line example&quot;</span>, x_axis_label=<span class="string">&apos;x&apos;</span>, y_axis_label=<span class="string">&apos;y&apos;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># add a line renderer with legend and line thickness</span></span><br><span class="line">p.line(x, y, legend=<span class="string">&quot;Temp.&quot;</span>, line_width=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># show the results</span></span><br><span class="line">show(p)</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Plotting Example</h2>
+<div class="outline-text-2" id="text-3">
+<div class="org-src-container">
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> bokeh.plotting <span class="keyword">import</span> figure, show, output_notebook</span><br></pre></td></tr></table></figure>
+</div>
+<ul class="org-ul">
+<li>Get data
+</li>
+</ul>
+<div class="org-src-container">
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">df = pd.read_csv(<span class="string">&apos;data/Land_Ocean_Monthly_Anomaly_Average.csv&apos;</span>)</span><br></pre></td></tr></table></figure>
+</div>
+
+<ul class="org-ul">
+<li>Process data
+</li>
+</ul>
+<div class="org-src-container">
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">df[<span class="string">&apos;datetime&apos;</span>] = pd.to_datetime(df[<span class="string">&apos;datetime&apos;</span>])</span><br><span class="line">df = df[[<span class="string">&apos;anomaly&apos;</span>,<span class="string">&apos;datetime&apos;</span>]]</span><br><span class="line">df[<span class="string">&apos;moving_average&apos;</span>] = pd.rolling_mean(df[<span class="string">&apos;anomaly&apos;</span>], <span class="number">12</span>)</span><br></pre></td></tr></table></figure>
+</div>
+<ul class="org-ul">
+<li>Output option
+</li>
+</ul>
+<div class="org-src-container">
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">output_notebook()</span><br></pre></td></tr></table></figure>
+</div>
+<ul class="org-ul">
+<li>Create your plot
+</li>
+</ul>
+<div class="org-src-container">
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">p = figure()</span><br><span class="line">p.line(df[<span class="string">&apos;datetime&apos;</span>], df[<span class="string">&apos;anomaly&apos;</span>])</span><br><span class="line">p.line(df[<span class="string">&apos;datetime&apos;</span>], df[<span class="string">&apos;moving_average&apos;</span>])</span><br></pre></td></tr></table></figure>
+</div>
+<ul class="org-ul">
+<li>show plot
+</li>
+</ul>
+<div class="org-src-container">
+
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">show(p)</span><br></pre></td></tr></table></figure>
+</div>
+
+
+<div class="figure">
+<p><img src="http://7xkeje.com1.z0.glb.clouddn.com/Screen%20Shot%202016-03-30%20at%204.17.09%20AM.png" alt="Screen%20Shot%202016-03-30%20at%204.17.09%20AM.png">
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Bokeh Style</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+<a href="http://bokeh.pydata.org/en/0.11.1/docs/user_guide/styling.html" target="_blank" rel="external">&#x53C2;&#x8003;&#x8D44;&#x6599;</a>
+</p>
+</div>
+<div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> figure &#x753B;&#x5E03;</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+&#x5B9A;&#x4E49;&#x56FE;&#x7247;&#x7684;&#x5927;&#x5C0F;&#xFF0C;&#x548C;&#x5B9A;&#x4E49; title
+&#x5B9A;&#x4E49; title &#x7684;&#x51FD;&#x6570;&#x662F;
+</p>
+<ul class="org-ul">
+<li>p.title<sub>text</sub><sub>color</sub>    :title &#x7684;&#x989C;&#x8272;
+</li>
+<li>p.title<sub>text</sub><sub>font</sub>     :font name
+</li>
+<li>p.title<sub>text</sub><sub>style</sub>    :font &#x7684; style
+</li>
+<li>p.title<sub>text</sub><sub>baseline</sub> :title &#x7684;&#x4F4D;&#x7F6E;
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Line</h3>
+<div class="outline-text-3" id="text-4-2">
+<ul class="org-ul">
+<li>line<sub>color</sub>
+</li>
+<li>line<sub>width</sub>
+</li>
+<li>line<sub>join</sub>
+</li>
+<li>line<sub>cap</sub>
+</li>
+</ul>
+<p>
+&#x6CE8;&#x610F;&#xFF1A;line &#x7684;&#x53C2;&#x6570;&#x662F;&#x9700;&#x8981;&#x5728; p.line()&#x7684;&#x62EC;&#x53F7;&#x4E2D;&#x7684;&#xFF0C;&#x4E0D;&#x80FD;&#x50CF; title&#xFF0C;&#x53EF;&#x4EE5;&#x53E6;&#x5F00;&#x4E00;&#x4E2A; p.title<sub>color</sub>
+</p>
+<ul class="org-ul">
+<li>line &#x7684;&#x683C;&#x5F0F;&#x662F; p.line(line<sub>color</sub> = &quot;&quot;, line<sub>cap</sub> = &quot;&quot;&#x2026;&#x2026;..)
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/03/24/resource/" itemprop="url">
                   未命名
                 </a>
@@ -1688,7 +1941,7 @@ rdd = sc.<span class="function"><span class="title">parallelize</span><span clas
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-count">10</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
