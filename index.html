@@ -253,155 +253,79 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1. Toys</a>
-<ul>
-<li><a href="#sec-1-1">1.1. Car</a></li>
-<li><a href="#sec-1-2">1.2. Cdr</a></li>
-<li><a href="#sec-1-3">1.3. Cons</a></li>
-<li><a href="#sec-1-4">1.4. Null</a></li>
-<li><a href="#sec-1-5">1.5. Eq?</a>
-<ul>
-<li><a href="#sec-1-5-1">1.5.1. How many arguments does eq? take and what are they?</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#sec-2">2. Do it, Do it Again ,Again, and Again</a>
-<ul>
-<li><a href="#sec-2-1">2.1. lat?</a></li>
-</ul>
-</li>
+<li><a href="#sec-1">1. Question</a></li>
+<li><a href="#sec-2">2. The First Commandment</a></li>
 <li><a href="#sec-3">3. Cons the Magnificent</a>
 <ul>
-<li><a href="#sec-3-1">3.1. Rember (rember a lat)</a></li>
-<li><a href="#sec-3-2">3.2. Note</a></li>
-<li><a href="#sec-3-3">3.3. Step</a>
+<li><a href="#sec-3-1">3.1. Aother Exmple</a></li>
+<li><a href="#sec-3-2">3.2. The Second Commandment</a></li>
+<li><a href="#sec-3-3">3.3. cond &#x64CD;&#x4F5C;&#x7B26;</a></li>
+<li><a href="#sec-3-4">3.4. Quote(&#x5F15;&#x7528;)</a></li>
+<li><a href="#sec-3-5">3.5. example</a>
 <ul>
-<li><a href="#sec-3-3-1">3.3.1. (null? lat)</a></li>
-<li><a href="#sec-3-3-2">3.3.2. How do we ask questions</a></li>
+<li><a href="#sec-3-5-1">3.5.1. Step</a></li>
+<li><a href="#sec-3-5-2">3.5.2. 7 &#x4E2A; Why</a></li>
 </ul>
 </li>
-<li><a href="#sec-3-4">3.4. Example</a>
+<li><a href="#sec-3-6">3.6. The third Commandment</a>
 <ul>
-<li><a href="#sec-3-4-1">3.4.1. try</a></li>
-<li><a href="#sec-3-4-2">3.4.2. Practice (firsts l)</a></li>
+<li><a href="#sec-3-6-1">3.6.1. What is naturl recursion</a></li>
+<li><a href="#sec-3-6-2">3.6.2. example</a></li>
+<li><a href="#sec-3-6-3">3.6.3. example insertR</a></li>
+<li><a href="#sec-3-6-4">3.6.4. example insertL</a></li>
 </ul>
 </li>
-<li><a href="#sec-3-5">3.5. The Third Commandment</a></li>
-<li><a href="#sec-3-6">3.6. Insert</a></li>
+<li><a href="#sec-3-7">3.7. Example subset</a></li>
+<li><a href="#sec-3-8">3.8. Example multirember</a></li>
+<li><a href="#sec-3-9">3.9. Example multiinsertR</a></li>
+<li><a href="#sec-3-10">3.10. The Fourth Commandment</a></li>
+</ul>
+</li>
+<li><a href="#sec-4">4. Number of Games</a>
+<ul>
+<li><a href="#sec-4-1">4.1. Plus +</a></li>
+<li><a href="#sec-4-2">4.2. Subduction</a></li>
+<li><a href="#sec-4-3">4.3. tup</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-
-
 <div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> Toys</h2>
+<h2 id="sec-1"><span class="section-number-2">1</span> Question</h2>
 <div class="outline-text-2" id="text-1">
-</div><div id="outline-container-sec-1-1" class="outline-3">
-<h3 id="sec-1-1"><span class="section-number-3">1.1</span> Car</h3>
-<div class="outline-text-3" id="text-1-1">
-<p>
-the primitive car is defined only for non-empty lists
-</p>
+<ul class="org-ul">
+<li>Atom &#x662F;&#x4EC0;&#x4E48;
+</li>
+<li>Car
+</li>
+<li>cdl
+</li>
+<li>Conds
+</li>
+<li>quote
+</li>
+<li>else  else always ask true
+</li>
+</ul>
 </div>
 </div>
-
-<div id="outline-container-sec-1-2" class="outline-3">
-<h3 id="sec-1-2"><span class="section-number-3">1.2</span> Cdr</h3>
-<div class="outline-text-3" id="text-1-2">
-<p>
-The primitive cdr is defined only for non-empty lists. 
-The cdr of any non-empty list is always another list.
-</p>
-</div>
-</div>
-<div id="outline-container-sec-1-3" class="outline-3">
-<h3 id="sec-1-3"><span class="section-number-3">1.3</span> Cons</h3>
-<div class="outline-text-3" id="text-1-3">
-<p>
-The primitive cons takes two arguments.
-The second argument to cons must be a list
-The results is a list.
-</p>
-</div>
-</div>
-<div id="outline-container-sec-1-4" class="outline-3">
-<h3 id="sec-1-4"><span class="section-number-3">1.4</span> Null</h3>
-<div class="outline-text-3" id="text-1-4">
-<p>
-The primitive null? is defined only for lists
-</p>
-</div>
-</div>
-<div id="outline-container-sec-1-5" class="outline-3">
-<h3 id="sec-1-5"><span class="section-number-3">1.5</span> Eq?</h3>
-<div class="outline-text-3" id="text-1-5">
-<p>
-The primitive eq? takes two arguments. Each must be a non-numeric atom
-</p>
-</div>
-
-<div id="outline-container-sec-1-5-1" class="outline-4">
-<h4 id="sec-1-5-1"><span class="section-number-4">1.5.1</span> How many arguments does eq? take and what are they?</h4>
-<div class="outline-text-4" id="text-1-5-1">
-<p>
-Two,Both of them must be non-numeric atoms
-</p>
-</div>
-</div>
-</div>
-</div>
-
 
 <div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> Do it, Do it Again ,Again, and Again</h2>
+<h2 id="sec-2"><span class="section-number-2">2</span> The First Commandment</h2>
 <div class="outline-text-2" id="text-2">
-</div><div id="outline-container-sec-2-1" class="outline-3">
-<h3 id="sec-2-1"><span class="section-number-3">2.1</span> lat?</h3>
-<div class="outline-text-3" id="text-2-1">
 <p>
-Every lat is a list of atoms!
+Always ask null? as the first question in expressing any function
 </p>
 
 <p>
-l is (bacon and eg
-</p>
-<div class="org-src-container">
-
-<figure class="highlight scheme"><table><tr><td class="code"><pre><span class="line"><span class="list">(<span class="keyword"><span class="built_in">define</span></span> lat?</span><br><span class="line">  <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="list">(<span class="keyword">bacon</span> and eggs)</span>)</span></span><br><span class="line">    <span class="list">(<span class="keyword"><span class="built_in">cond</span></span></span><br><span class="line">      <span class="list">(<span class="list">(<span class="keyword"><span class="built_in">null?</span></span> l)</span> <span class="literal">#t</span> )</span></span><br><span class="line">      <span class="list">(<span class="list">(<span class="keyword">atom?</span><span class="list">(<span class="keyword"><span class="built_in">car</span></span> l)</span>)</span> <span class="list">(<span class="keyword">lat?</span><span class="list">(<span class="keyword"><span class="built_in">cdr</span></span> l)</span>)</span>)</span></span><br><span class="line">      <span class="list">(<span class="keyword"><span class="built_in">else</span></span> <span class="literal">#f</span>)</span>)</span>)</span>)</span></span><br></pre></td></tr></table></figure>
-</div>
-
-
-<div class="org-src-container">
-
-<figure class="highlight scheme"><table><tr><td class="code"><pre><span class="line"><span class="list">(<span class="keyword"><span class="built_in">*</span></span> <span class="number">2</span> <span class="list">(<span class="keyword"><span class="built_in">+</span></span> <span class="number">3</span> <span class="number">4</span>)</span>)</span></span><br></pre></td></tr></table></figure>
-</div>
-
-<div class="org-src-container">
-
-<figure class="highlight scheme"><table><tr><td class="code"><pre><span class="line"><span class="list">(<span class="keyword">defun</span> lat? <span class="list">(<span class="keyword">bacon</span>)</span></span><br><span class="line">  <span class="list">(<span class="keyword"><span class="built_in">cond</span></span></span><br><span class="line">    <span class="list">(<span class="list">(<span class="keyword">null</span> <span class="list">(<span class="keyword">bacon</span>)</span>)</span> t)</span></span><br><span class="line">    <span class="list">(<span class="list">(<span class="keyword">atom?</span> <span class="list">(<span class="keyword"><span class="built_in">car</span></span> <span class="list">(<span class="keyword">bacon</span>)</span>)</span>)</span> <span class="list">(<span class="keyword">lat?</span> <span class="list">(<span class="keyword"><span class="built_in">cdr</span></span> <span class="list">(<span class="keyword">bacon</span>)</span>)</span>)</span>)</span></span><br><span class="line">    <span class="list">(<span class="keyword">t</span> nil)</span>)</span>)</span></span><br></pre></td></tr></table></figure>
-</div>
-
-
-<div class="org-src-container">
-
-<figure class="highlight scheme"><table><tr><td class="code"><pre><span class="line"><span class="list">(<span class="keyword"><span class="built_in">define</span></span> member?</span><br><span class="line">  <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">a</span> lat)</span></span><br><span class="line">    <span class="list">(<span class="keyword"><span class="built_in">cond</span></span></span><br><span class="line">      <span class="list">(<span class="list">(<span class="keyword"><span class="built_in">null?</span></span> lat)</span> <span class="literal">#f</span>)</span></span><br><span class="line">      <span class="list">(<span class="keyword"><span class="built_in">else</span></span> <span class="list">(<span class="keyword"><span class="built_in">or</span></span> <span class="list">(<span class="keyword"><span class="built_in">eq?</span></span> <span class="list">(<span class="keyword"><span class="built_in">car</span></span> lat)</span> a)</span></span><br><span class="line">	      <span class="list">(<span class="keyword">member?</span> a <span class="list">(<span class="keyword"><span class="built_in">cdr</span></span> lat)</span>)</span>)</span>)</span>)</span>)</span>)</span></span><br></pre></td></tr></table></figure>
-</div>
-
-<p>
-a is meat
-lat is (mashed potatoes and meat gravy)
+((null? lat) #f)
+If not next question&#xFF0C;If it is ,the value is #f
 </p>
 
-<p>
-what is the meaning of the line
-</p>
-<pre class="example">
-(else (or (eq? (car lat) a)
-             (member? a (cdr lat)))))))
-</pre>
+<div class="org-src-container">
+
+<figure class="highlight scheme"><table><tr><td class="code"><pre><span class="line"><span class="list">(<span class="keyword"><span class="built_in">define</span></span> member? </span><br><span class="line"><span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">a</span> lat)</span></span><br><span class="line"><span class="list">(<span class="keyword"><span class="built_in">cond</span></span></span><br><span class="line"><span class="list">(<span class="list">(<span class="keyword"><span class="built_in">null?</span></span> lat)</span> <span class="literal">#f</span>)</span></span><br><span class="line"><span class="list">(<span class="keyword"><span class="built_in">else</span></span> <span class="list">(<span class="keyword"><span class="built_in">or</span></span> <span class="list">(<span class="keyword"><span class="built_in">eq?</span></span> <span class="list">(<span class="keyword"><span class="built_in">car</span></span> lat)</span> a)</span></span><br><span class="line"><span class="list">(<span class="keyword">member?</span> a <span class="list">(<span class="keyword"><span class="built_in">cdr</span></span> tat)</span>)</span>)</span>)</span>)</span>)</span>)</span></span><br></pre></td></tr></table></figure>
 </div>
 </div>
 </div>
@@ -409,150 +333,479 @@ what is the meaning of the line
 <div id="outline-container-sec-3" class="outline-2">
 <h2 id="sec-3"><span class="section-number-2">3</span> Cons the Magnificent</h2>
 <div class="outline-text-2" id="text-3">
-</div><div id="outline-container-sec-3-1" class="outline-3">
-<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Rember (rember a lat)</h3>
-<div class="outline-text-3" id="text-3-1">
 <p>
-&quot;Rember&quot; stands for remove a member
-It takes an atom and a lat as its arguments,
-and makes a new lat with the first occurrence 
-of the atom in the old lat removed.
+(cond
+(<span class="underline"><span class="underline">__</span></span> <span class="underline"><span class="underline">__</span></span>)
+(<span class="underline"><span class="underline">__</span></span> <span class="underline"><span class="underline">__</span></span>))
+</p>
+
+
+<div class="org-src-container">
+
+<figure class="highlight scheme"><table><tr><td class="code"><pre><span class="line"><span class="list">(<span class="keyword"><span class="built_in">define</span></span> rember</span><br><span class="line">  <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">a</span> lat)</span></span><br><span class="line">    <span class="list">(<span class="keyword"><span class="built_in">cond</span></span></span><br><span class="line">     <span class="list">(<span class="list">(<span class="keyword"><span class="built_in">null?</span></span> lat)</span> <span class="list">(<span class="keyword"><span class="built_in">quote</span></span> <span class="list">()</span>)</span>)</span></span><br><span class="line">     <span class="list">(<span class="keyword"><span class="built_in">else</span></span> <span class="list">(<span class="keyword"><span class="built_in">cond</span></span></span><br><span class="line">	    <span class="list">(<span class="list">(<span class="keyword"><span class="built_in">eq?</span></span> <span class="list">(<span class="keyword"><span class="built_in">car</span></span> lat)</span> a)</span> <span class="list">(<span class="keyword"><span class="built_in">cdr</span></span> lat)</span>)</span></span><br><span class="line">	    <span class="list">(<span class="keyword"><span class="built_in">else</span></span> <span class="list">(<span class="keyword">rember</span> a</span><br><span class="line">			  <span class="list">(<span class="keyword"><span class="built_in">cdr</span></span> lat)</span>)</span>)</span>)</span>)</span>)</span>)</span>)</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+if a is bacon
+lat is (bacon lettuce and tomato)
 </p>
 </div>
-</div>
-<div id="outline-container-sec-3-2" class="outline-3">
-<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Note</h3>
-<div class="outline-text-3" id="text-3-2">
+
+<div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Aother Exmple</h3>
+<div class="outline-text-3" id="text-3-1">
 <p>
-(cond &#x2026; ) asks questions;
-(lambda &#x2026; ) creates a function; and 
-(define &#x2026; ) gives it a name.
+a is and 
+lat is bacon lettuce and tomato
 </p>
 </div>
 </div>
 
-<div id="outline-container-sec-3-3" class="outline-3">
-<h3 id="sec-3-3"><span class="section-number-3">3.3</span> Step</h3>
-<div class="outline-text-3" id="text-3-3">
-</div><div id="outline-container-sec-3-3-1" class="outline-4">
-<h4 id="sec-3-3-1"><span class="section-number-4">3.3.1</span> (null? lat)</h4>
-</div>
-<div id="outline-container-sec-3-3-2" class="outline-4">
-<h4 id="sec-3-3-2"><span class="section-number-4">3.3.2</span> How do we ask questions</h4>
-<div class="outline-text-4" id="text-3-3-2">
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> The Second Commandment</h3>
+<div class="outline-text-3" id="text-3-2">
 <p>
-(cond
-  (<span class="underline"><span class="underline"><span class="underline">_</span></span></span> <span class="underline"><span class="underline"><span class="underline">__</span></span></span>)
-  (<span class="underline"><span class="underline"><span class="underline">_</span></span></span> <span class="underline"><span class="underline"><span class="underline"><span class="underline">_</span></span></span></span>))
+Use cons to bulid list
 </p>
+
+<div class="org-src-container">
+
+<figure class="highlight scheme"><table><tr><td class="code"><pre><span class="line"><span class="list">(<span class="keyword"><span class="built_in">define</span></span> rember</span><br><span class="line">  <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">a</span> lat)</span></span><br><span class="line">    <span class="list">(<span class="keyword"><span class="built_in">cond</span></span></span><br><span class="line">     <span class="list">(<span class="list">(<span class="keyword"><span class="built_in">null?</span></span> lat)</span> <span class="list">(<span class="keyword"><span class="built_in">quote</span></span> <span class="list">()</span>)</span>)</span></span><br><span class="line">     <span class="list">(<span class="keyword"><span class="built_in">else</span></span> <span class="list">(<span class="keyword"><span class="built_in">cond</span></span></span><br><span class="line">	    <span class="list">(<span class="list">(<span class="keyword"><span class="built_in">eq?</span></span> <span class="list">(<span class="keyword"><span class="built_in">car</span></span> lat)</span> a)</span> <span class="list">(<span class="keyword"><span class="built_in">cdr</span></span> lat)</span>)</span></span><br><span class="line">	    <span class="list">(<span class="keyword"><span class="built_in">else</span></span> <span class="list">(<span class="keyword"><span class="built_in">cons</span></span> <span class="list">(<span class="keyword"><span class="built_in">car</span></span> lat)</span></span><br><span class="line">		   <span class="list">(<span class="keyword">rember</span> a</span><br><span class="line">		    <span class="list">(<span class="keyword"><span class="built_in">cdr</span></span> lat)</span>)</span>)</span>)</span>)</span>)</span>)</span></span></span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+cons &#x4E2D;&#x6709;&#x4E24;&#x4E2A;&#x53C2;&#x6570;&#xFF0C;&#x5206;&#x522B;&#x662F; (car lat ) &#x548C; (remeber a (cdr lat))
+&#x56E0;&#x4E3A;&#x65E0;&#x6CD5;&#x77E5;&#x9053; remeber cons,&#x8FD4;&#x56DE;&#x7684;&#x503C;&#x5C31;&#x662F;(bacon remeber)
+remeber &#x662F;&#x5F00;&#x5934;&#x5B9A;&#x4E49;&#x7684;&#x51FD;&#x6570;&#xFF0C;&#x76F4;&#x5230;&#x627E;&#x5230; rember &#x7684;&#x503C;
+</p>
+
+<ul class="org-ul">
+<li>(bacon rember
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col class="left">
+</colgroup>
+<tbody>
+<tr>
+<td class="left">&#xA0;</td>
+</tr>
+</tbody>
+</table>
+<p>
+VV
+</p>
+<ul class="org-ul">
+<li>(lettuce remeber
+<ul class="org-ul">
+<li>&#x8FD9;&#x91CC;  ((eq? (car lat) a) (cdr lat))&#x8FD4;&#x56DE;&#x7684;&#x503C;&#x5C31;&#x662F;
+(cdr lat) = tomato
+lat = and tomato
+<b>lat &#x4EC0;&#x4E48;&#x65F6;&#x5019;&#x7B49;&#x4E8E; (lettuce and tomato)
+ &#x548C;(bacon lettuce and tomato)</b>
+rember a (cdr lat)
+  a = and
+  (cdr lat) = and tomato 
+</li>
+</ul>
+<p>
++(lettuce tomato)
+</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>
++(bacon lettuce tomato)
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> cond &#x64CD;&#x4F5C;&#x7B26;</h3>
+<div class="outline-text-3" id="text-3-3">
+<ul class="org-ul">
+<li>cond &#x8BED;&#x6CD5;&#x662F;&#xFF08;&#x5206;&#x652F; 1&#xFF0C;&#x5206;&#x652F; 2&#xFF0C;&#x5206;&#x652F; 3&#x2026;..&#x5206;&#x652F; n&#xFF09;&#xFF0C;&#x6784;&#x6210;&#x662F;(&#x6761;&#x4EF6; p&#xFF0C;&#x503C; e)
+</li>
+<li>&#x5982;&#x679C;&#x6761;&#x4EF6; 1 &#x4E0D;&#x6210;&#x7ACB;&#x5C31;&#x7EE7;&#x7EED;&#x4E0B;&#x4E00;&#x4E2A;&#x5206;&#x652F;&#xFF0C;&#x76F4;&#x5230;&#x5206;&#x652F;&#x6210;&#x7ACB;
+</li>
+<li>&#x5982;&#x679C;&#x5206;&#x652F;&#x4E0D;&#x6210;&#x7ACB;&#xFF0C;&#x8FD4;&#x56DE; nil
+</li>
+</ul>
+<div class="org-src-container">
+
+<figure class="highlight scheme"><table><tr><td class="code"><pre><span class="line"><span class="list">(<span class="keyword"><span class="built_in">cond</span></span> <span class="list">(<span class="keyword">nil</span> <span class="number">1</span>)</span> <span class="list">(<span class="keyword">nil</span> <span class="number">2</span>)</span> <span class="list">(<span class="keyword">t</span> <span class="number">3</span>)</span>)</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<div class="org-src-container">
+
+<figure class="highlight scheme"><table><tr><td class="code"><pre><span class="line"><span class="list">(<span class="keyword"><span class="built_in">cond</span></span> <span class="list">(<span class="keyword">t</span> <span class="number">1</span>)</span> <span class="list">(<span class="keyword">nil</span> <span class="number">2</span>)</span> <span class="list">(<span class="keyword">t</span> <span class="number">3</span>)</span>)</span></span><br></pre></td></tr></table></figure>
 </div>
 </div>
 </div>
 
 <div id="outline-container-sec-3-4" class="outline-3">
-<h3 id="sec-3-4"><span class="section-number-3">3.4</span> Example</h3>
+<h3 id="sec-3-4"><span class="section-number-3">3.4</span> Quote(&#x5F15;&#x7528;)</h3>
 <div class="outline-text-3" id="text-3-4">
 <div class="org-src-container">
 
-<figure class="highlight scheme"><table><tr><td class="code"><pre><span class="line"><span class="list">(<span class="keyword"><span class="built_in">define</span></span> rember</span><br><span class="line">  <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">( a lat)</span></span><br><span class="line">     <span class="list">(<span class="keyword"><span class="built_in">cond</span></span></span><br><span class="line">	<span class="list">(<span class="list">(<span class="keyword"><span class="built_in">null?</span></span> lat)</span> <span class="list">(<span class="keyword"><span class="built_in">quote</span></span><span class="list">()</span>)</span>)</span></span><br><span class="line">	<span class="list">(<span class="keyword"><span class="built_in">else</span></span> <span class="list">(<span class="keyword"><span class="built_in">cond</span></span></span><br><span class="line">		<span class="list">(<span class="list">(<span class="keyword"><span class="built_in">eq?</span></span><span class="list">(<span class="keyword"><span class="built_in">car</span></span> lat)</span> a)</span> <span class="list">(<span class="keyword"><span class="built_in">cdr</span></span> lat)</span>)</span></span><br><span class="line">		<span class="list">(<span class="keyword"><span class="built_in">else</span></span> <span class="list">(<span class="keyword">rember</span> a </span><br><span class="line">			 <span class="list">(<span class="keyword"><span class="built_in">cdr</span></span> lat)</span>)</span>)</span>)</span>)</span>)</span>)</span>)</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight scheme"><table><tr><td class="code"><pre><span class="line"><span class="comment">;(quote (+ 2 3))</span></span><br><span class="line"><span class="list">(<span class="keyword"><span class="built_in">+</span></span> <span class="number">2</span> <span class="number">9</span> )</span></span><br></pre></td></tr></table></figure>
 </div>
-</div>
-
-<div id="outline-container-sec-3-4-1" class="outline-4">
-<h4 id="sec-3-4-1"><span class="section-number-4">3.4.1</span> try</h4>
-<div class="outline-text-4" id="text-3-4-1">
-<p>
-1.First Arguments
-a is bacon
-lat is (bacon lettuce and tomato)
-2.Second Arguments
-a is and 
-lat is (bacon lettuce and tomato)
-</p>
-
-<p>
-results&#xFF1A;Wrong
-</p>
 
 <div class="org-src-container">
 
-<figure class="highlight scheme"><table><tr><td class="code"><pre><span class="line"><span class="list">(<span class="keyword"><span class="built_in">define</span></span> rember</span><br><span class="line">  <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">a</span> lat)</span></span><br><span class="line">    <span class="list">(<span class="keyword"><span class="built_in">cond</span></span></span><br><span class="line">      <span class="list">(<span class="list">(<span class="keyword"><span class="built_in">null?</span></span> lat)</span> <span class="list">(<span class="keyword"><span class="built_in">quote</span></span> <span class="list">()</span>)</span>)</span></span><br><span class="line">      <span class="list">(<span class="keyword"><span class="built_in">else</span></span> <span class="list">(<span class="keyword"><span class="built_in">cond</span></span></span><br><span class="line">	      <span class="list">(<span class="list">(<span class="keyword"><span class="built_in">eq?</span></span><span class="list">(<span class="keyword"><span class="built_in">car</span></span> lat)</span> a)</span> <span class="list">(<span class="keyword"><span class="built_in">cdr</span></span> lat)</span>)</span></span><br><span class="line">	      <span class="list">(<span class="keyword"><span class="built_in">else</span></span> <span class="list">(<span class="keyword"><span class="built_in">cons</span></span> <span class="list">(<span class="keyword"><span class="built_in">car</span></span> lat)</span></span><br><span class="line">		      <span class="list">(<span class="keyword">rember</span> a</span><br><span class="line">			 <span class="list">(<span class="keyword"><span class="built_in">cdr</span></span> lat)</span>)</span>)</span>)</span>)</span>)</span>)</span>)</span>)</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight scheme"><table><tr><td class="code"><pre><span class="line"><span class="list">(<span class="keyword"><span class="built_in">+</span></span> <span class="number">1</span> <span class="number">2</span>)</span></span><br></pre></td></tr></table></figure>
 </div>
 
-<pre class="example">
-What is the meanning of
-  (cons (car lat)
-    (rember a
-       (cdr lat)))
-</pre>
-</div>
-</div>
-<div id="outline-container-sec-3-4-2" class="outline-4">
-<h4 id="sec-3-4-2"><span class="section-number-4">3.4.2</span> Practice (firsts l)</h4>
-<div class="outline-text-4" id="text-3-4-2">
 <div class="org-src-container">
 
-<figure class="highlight scheme"><table><tr><td class="code"><pre><span class="line"><span class="list">(<span class="keyword"><span class="built_in">define</span></span> first</span><br><span class="line">  <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">a</span> lat)</span></span><br><span class="line">    <span class="list">(<span class="keyword"><span class="built_in">cond</span></span></span><br><span class="line">    <span class="list">(<span class="list">(<span class="keyword"><span class="built_in">null?</span></span> lat)</span></span><br><span class="line">    <span class="list">(<span class="keyword"><span class="built_in">else</span></span> <span class="list">(<span class="keyword"><span class="built_in">cons</span></span> <span class="list">(<span class="keyword"><span class="built_in">car</span></span> lat)</span></span><br><span class="line">	    <span class="list">(<span class="keyword">first</span> a</span><br><span class="line">	       <span class="list">(<span class="keyword"><span class="built_in">cdr</span></span> lat)</span>)</span>)</span>)</span>)</span>)</span>)</span>)</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight scheme"><table><tr><td class="code"><pre><span class="line"><span class="list">(<span class="keyword"><span class="built_in">quote</span></span><span class="list">(<span class="keyword"><span class="built_in">+</span></span> <span class="number">2</span> <span class="number">3</span>)</span>)</span></span><br></pre></td></tr></table></figure>
 </div>
 </div>
 </div>
-</div>
+
 <div id="outline-container-sec-3-5" class="outline-3">
-<h3 id="sec-3-5"><span class="section-number-3">3.5</span> The Third Commandment</h3>
+<h3 id="sec-3-5"><span class="section-number-3">3.5</span> example</h3>
 <div class="outline-text-3" id="text-3-5">
 <p>
-When building a list ,describe the firdt typical element,
-and then cons it onto the natural recursion
+first &#x53D6;&#x51FA;&#x6BCF;&#x4E00;&#x4E2A;&#x5217;&#x4E2D;&#x7B2C;&#x4E00;&#x4E2A;&#x5355;&#x8BCD;
+ l = ((apple peach pumpkin)
+       (plum pear cherry) 
+       (grape raisin pea)
+       (bean carrot eggplant))
+first l = (apple plum grape bean).
 </p>
 
-<pre class="example">
-(else (cons (car (car l)) (firsts (cdr l))))
-</pre>
-</div>
+<p>
+l = ()
+first l = ()
+</p>
+
+<p>
+l =  (((five plums) four)
+     (eleven green oranges)
+     ((no) more))      
+first = ((five plums) eleven (no))
+</p>
 </div>
 
-<div id="outline-container-sec-3-6" class="outline-3">
-<h3 id="sec-3-6"><span class="section-number-3">3.6</span> Insert</h3>
-<div class="outline-text-3" id="text-3-6">
+<div id="outline-container-sec-3-5-1" class="outline-4">
+<h4 id="sec-3-5-1"><span class="section-number-4">3.5.1</span> Step</h4>
+<div class="outline-text-4" id="text-3-5-1">
 <div class="org-src-container">
 
-<figure class="highlight scheme"><table><tr><td class="code"><pre><span class="line"><span class="list">(<span class="keyword"><span class="built_in">define</span></span> insertR</span><br><span class="line">   <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">new</span> old lat)</span></span><br><span class="line">      <span class="list">(<span class="keyword"><span class="built_in">cond</span></span></span><br><span class="line">	<span class="list">(<span class="list">(<span class="keyword"><span class="built_in">null?</span></span> lat)</span> <span class="list">(<span class="keyword"><span class="built_in">quote</span></span><span class="list">()</span>)</span>)</span></span><br><span class="line">	<span class="list">(<span class="keyword"><span class="built_in">else</span></span></span><br><span class="line">	   <span class="list">(<span class="keyword"><span class="built_in">cond</span></span></span><br><span class="line">	      <span class="list">(<span class="list">(<span class="keyword"><span class="built_in">eq?</span></span> <span class="list">(<span class="keyword"><span class="built_in">car</span></span> lat)</span> old)</span> </span><br><span class="line">	      <span class="list">(<span class="keyword"><span class="built_in">cons</span></span> new<span class="list">(<span class="keyword"><span class="built_in">cdr</span></span> lat)</span>)</span>)</span></span><br><span class="line">	      <span class="list">(<span class="keyword"><span class="built_in">else</span></span> <span class="list">(<span class="keyword"><span class="built_in">cons</span></span> <span class="list">(<span class="keyword"><span class="built_in">car</span></span> lat)</span></span><br><span class="line">	      <span class="list">(<span class="keyword">insertR</span> new old</span><br><span class="line">		 <span class="list">(<span class="keyword"><span class="built_in">cdr</span></span> lat)</span>)</span>)</span>)</span>)</span>)</span>)</span>)</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight scheme"><table><tr><td class="code"><pre><span class="line"><span class="list">(<span class="keyword"><span class="built_in">define</span></span> firsts</span><br><span class="line">      <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">l</span>)</span></span><br><span class="line">       ... )</span>)</span></span><br></pre></td></tr></table></figure>
 </div>
+</div>
+</div>
+<div id="outline-container-sec-3-5-2" class="outline-4">
+<h4 id="sec-3-5-2"><span class="section-number-4">3.5.2</span> 7 &#x4E2A; Why</h4>
+<div class="outline-text-4" id="text-3-5-2">
+<ul class="org-ul">
+<li>why define firsts
+</li>
+<li>why cond
+</li>
+<li>why null l
+</li>
+<li>why else
+</li>
+<li>why else
+</li>
+<li>why cons :bulid a list
+</li>
+<li>why (firsts (cdr l))
+</li>
+<li>why )))
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-6" class="outline-3">
+<h3 id="sec-3-6"><span class="section-number-3">3.6</span> The third Commandment</h3>
+<div class="outline-text-3" id="text-3-6">
 <p>
-(quote hello world)
+When building a list,describe the first typical element and then cons it onto <b>naturl recursion</b>
 </p>
-<pre class="example">
-An error occurred.
-</pre>
+</div>
+<div id="outline-container-sec-3-6-1" class="outline-4">
+<h4 id="sec-3-6-1"><span class="section-number-4">3.6.1</span> What is naturl recursion</h4>
+<div class="outline-text-4" id="text-3-6-1">
+<p>
+(else (cons (car (car l)) (first (cdr l))
+            -&#x2014;&#x2014;&#x2014;&#x2014;  &#x2013;&#x2014;&#x2014;&#x2014;&#x2014;
+               typical      natural
+               element     recursion
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-6-2" class="outline-4">
+<h4 id="sec-3-6-2"><span class="section-number-4">3.6.2</span> example</h4>
+<div class="outline-text-4" id="text-3-6-2">
+<p>
+l = ((a b) (c d) (e f))
+first = (a c d)
+</p>
+</div>
+<ol class="org-ol"><li><a id="sec-3-6-2-1" name="sec-3-6-2-1"></a>What is the meaning of<br><div class="outline-text-5" id="text-3-6-2-1">
+<p>
+(cons (car (car l)) (first (cdr l)))
+</p>
+<ul class="org-ul">
+<li>cons :bulid a list 
+</li>
+<li>(cons (car (car l)) (first (cdr l)))
+&#x2014;&#x2014;&#x2014;&#x2014;  &#x2014;&#x2014;&#x2014;&#x2014;&#x2014;
+   list1       list2
+<hr>
+<p>
+a         &#x91CD;&#x65B0;&#x5F00;&#x59CB; first
+        (cons (car (car l)) (first (cdr l)))
+</p>
+<hr>
+<p>
+c
+</p>
+</li>
+</ul>
+</div>
+</li></ol>
+</div>
+<div id="outline-container-sec-3-6-3" class="outline-4">
+<h4 id="sec-3-6-3"><span class="section-number-4">3.6.3</span> example insertR</h4>
+<div class="outline-text-4" id="text-3-6-3">
+<p>
+new = 
+old = 
+&#x5728; old &#x540E;&#x9762;&#x63D2;&#x5165; new
+</p>
+</div>
+<ol class="org-ol"><li><a id="sec-3-6-3-1" name="sec-3-6-3-1"></a>First three line<br><div class="outline-text-5" id="text-3-6-3-1">
+<p>
+(define insertR
+(lambda (new old lat)
+(cond&#x2026;..)))
+</p>
+</div>
+</li>
+<li><a id="sec-3-6-3-2" name="sec-3-6-3-2"></a>which argument should change when we recur with insertR<br><div class="outline-text-5" id="text-3-6-3-2">
+<p>
+lat
+</p>
+</div>
+</li>
+<li><a id="sec-3-6-3-3" name="sec-3-6-3-3"></a>How many question should we ask<br><div class="outline-text-5" id="text-3-6-3-3">
+<ul class="org-ul">
+<li>A lat is a null list
+</li>
+</ul>
+</div>
+</li>
+<li><a id="sec-3-6-3-4" name="sec-3-6-3-4"></a>Whole Function<br><div class="outline-text-5" id="text-3-6-3-4">
+<p>
+(define insertR
+  (lambda (new old )
+    (cond
+     (<span class="underline"><span class="underline">__</span></span> <span class="underline"><span class="underline"><span class="underline">_</span></span></span>
+             (else
+              (cond
+               (<span class="underline"><span class="underline">__</span></span> <span class="underline"><span class="underline">__</span></span>
+                       (<span class="underline"><span class="underline">__</span></span> <span class="underline"><span class="underline">__</span></span>))))))))
+</p>
+
+<div class="org-src-container">
+
+<figure class="highlight scheme"><table><tr><td class="code"><pre><span class="line"><span class="list">(<span class="keyword"><span class="built_in">define</span></span> insertR </span><br><span class="line"><span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">new</span> old lat)</span></span><br><span class="line"><span class="list">(<span class="keyword"><span class="built_in">cond</span></span></span><br><span class="line"><span class="list">(<span class="list">(<span class="keyword"><span class="built_in">null?</span></span> lat)</span> <span class="list">(<span class="keyword"><span class="built_in">quote</span></span> <span class="list">()</span>)</span>)</span> </span><br><span class="line"><span class="list">(<span class="keyword"><span class="built_in">else</span></span> <span class="list">(<span class="keyword"><span class="built_in">cond</span></span></span><br><span class="line"><span class="list">(<span class="list">(<span class="keyword"><span class="built_in">eq?</span></span> <span class="list">(<span class="keyword"><span class="built_in">car</span></span> lat)</span> old)</span></span><br><span class="line"> <span class="list">(<span class="keyword"><span class="built_in">cons</span></span> new <span class="list">(<span class="keyword"><span class="built_in">cdr</span></span> lat)</span>)</span>)</span></span><br><span class="line"><span class="list">(<span class="keyword"><span class="built_in">else</span></span> <span class="list">(<span class="keyword"><span class="built_in">cons</span></span> <span class="list">(<span class="keyword"><span class="built_in">car</span></span> lat)</span></span><br><span class="line"> <span class="list">(<span class="keyword">insertR</span> new old</span><br><span class="line"><span class="list">(<span class="keyword"><span class="built_in">cdr</span></span> lat)</span>)</span>)</span>)</span>)</span>)</span>)</span>)</span>)</span></span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</li></ol>
+</div>
+<div id="outline-container-sec-3-6-4" class="outline-4">
+<h4 id="sec-3-6-4"><span class="section-number-4">3.6.4</span> example insertL</h4>
+<div class="outline-text-4" id="text-3-6-4">
+<div class="org-src-container">
+
+<figure class="highlight scheme"><table><tr><td class="code"><pre><span class="line"><span class="list">(<span class="keyword"><span class="built_in">define</span></span> insertL</span><br><span class="line"><span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">new</span> old lat)</span></span><br><span class="line"><span class="list">(<span class="keyword"><span class="built_in">cond</span></span></span><br><span class="line"><span class="list">(<span class="list">(<span class="keyword"><span class="built_in">null?</span></span> lat)</span> <span class="list">(<span class="keyword"><span class="built_in">quote</span></span> <span class="list">()</span>)</span>)</span> </span><br><span class="line"><span class="list">(<span class="keyword"><span class="built_in">else</span></span> <span class="list">(<span class="keyword"><span class="built_in">cond</span></span></span><br><span class="line"><span class="list">(<span class="list">(<span class="keyword"><span class="built_in">eq?</span></span> <span class="list">(<span class="keyword"><span class="built_in">car</span></span> lat)</span> old)</span> <span class="list">(<span class="keyword"><span class="built_in">cons</span></span> new</span><br><span class="line"><span class="list">(<span class="keyword"><span class="built_in">cons</span></span> old <span class="list">(<span class="keyword"><span class="built_in">cdr</span></span> lat)</span>)</span>)</span>)</span></span><br><span class="line"> <span class="list">(<span class="keyword"><span class="built_in">else</span></span> <span class="list">(<span class="keyword"><span class="built_in">cons</span></span> <span class="list">(<span class="keyword"><span class="built_in">car</span></span> lat)</span></span><br><span class="line"><span class="list">(<span class="keyword">insertL</span> new old <span class="list">(<span class="keyword"><span class="built_in">cdr</span></span> lat)</span>)</span>)</span>)</span>)</span>)</span>)</span>)</span>)</span></span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+<b>eq? &#x540E;&#x9762;&#x8DDF; else</b>
+<b>&#x4E0D; eq&#xFF1F; &#x8DF3;&#x8F6C;&#x5230; else</b>
+</p>
 
 <p>
 new = topping
-old = fudge
+old = fuge
+lat = ice cream with fudge for dessert
+value = ice cream with topping for dessert
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-3-7" class="outline-3">
+<h3 id="sec-3-7"><span class="section-number-3">3.7</span> Example subset</h3>
+<div class="outline-text-3" id="text-3-7">
+<p>
+new = topping
+old = fuge
 lat = (ice cream with fudge for dessert)
+value = (ice cream with topping for dessert)
+</p>
+<div class="org-src-container">
+
+<figure class="highlight scheme"><table><tr><td class="code"><pre><span class="line"><span class="list">(<span class="keyword"><span class="built_in">define</span></span> subst2</span><br><span class="line">   <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">new</span> <span class="number">01</span> <span class="number">02</span> lat)</span></span><br><span class="line"><span class="list">(<span class="keyword"><span class="built_in">cond</span></span></span><br><span class="line"><span class="list">(<span class="list">(<span class="keyword"><span class="built_in">null?</span></span> lat)</span> <span class="list">(<span class="keyword"><span class="built_in">quote</span></span> <span class="list">()</span>)</span>)</span></span><br><span class="line"><span class="list">(<span class="keyword"><span class="built_in">else</span></span> <span class="list">(<span class="keyword"><span class="built_in">cond</span></span></span><br><span class="line"><span class="list">(<span class="list">(<span class="keyword"><span class="built_in">eq?</span></span> <span class="list">(<span class="keyword"><span class="built_in">car</span></span> lat)</span> <span class="number">01</span>)</span> <span class="list">(<span class="keyword"><span class="built_in">cons</span></span> new <span class="list">(<span class="keyword"><span class="built_in">cdr</span></span> lat)</span>)</span>)</span></span><br><span class="line"><span class="list">(<span class="list">(<span class="keyword"><span class="built_in">eq?</span></span> <span class="list">(<span class="keyword"><span class="built_in">car</span></span> lat)</span> <span class="number">02</span>)</span> <span class="list">(<span class="keyword"><span class="built_in">cons</span></span> new <span class="list">(<span class="keyword"><span class="built_in">cdr</span></span> lat)</span>)</span>)</span></span><br><span class="line"><span class="list">(<span class="keyword"><span class="built_in">else</span></span> <span class="list">(<span class="keyword"><span class="built_in">cons</span></span> <span class="list">(<span class="keyword"><span class="built_in">car</span></span> lat)</span> <span class="list">(<span class="keyword">subst2</span> new <span class="number">01</span> <span class="number">02</span></span><br><span class="line"><span class="list">(<span class="keyword"><span class="built_in">cdr</span></span> lat)</span>)</span>)</span>)</span>)</span>)</span>)</span>)</span>)</span></span><br></pre></td></tr></table></figure>
+</div>
+<p>
+new = vanilla
+01 = chocolate
+02 = banana
+lat = (banana ice cream with chocolate topping)
+value = (vanilla ice cream with chocolate topping)
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-8" class="outline-3">
+<h3 id="sec-3-8"><span class="section-number-3">3.8</span> Example multirember</h3>
+<div class="outline-text-3" id="text-3-8">
+<p>
+a = cup 
+lat = (coffee cup tea cup and hick cup)
+value = coffee tea and hick
 </p>
 
-
 <div class="org-src-container">
 
-<figure class="highlight scheme"><table><tr><td class="code"><pre><span class="line"><span class="list">(<span class="keyword"><span class="built_in">quote</span></span> hello)</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight scheme"><table><tr><td class="code"><pre><span class="line"><span class="list">(<span class="keyword"><span class="built_in">define</span></span> multirember</span><br><span class="line">  <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">( a lat)</span></span><br><span class="line">    <span class="list">(<span class="keyword"><span class="built_in">cond</span></span></span><br><span class="line">     <span class="list">(<span class="list">(<span class="keyword"><span class="built_in">null?</span></span> lat <span class="list">(<span class="keyword"><span class="built_in">quote</span></span> <span class="list">()</span>)</span>)</span></span><br><span class="line">      <span class="list">(<span class="keyword"><span class="built_in">else</span></span></span><br><span class="line">       <span class="list">(<span class="keyword"><span class="built_in">cond</span></span></span><br><span class="line">	<span class="list">(<span class="list">(<span class="keyword"><span class="built_in">eq?</span></span> <span class="list">(<span class="keyword"><span class="built_in">car</span></span> lat)</span> a)</span></span><br><span class="line">	 <span class="list">(<span class="keyword">multirember</span> a <span class="list">(<span class="keyword"><span class="built_in">cdr</span></span> lat)</span>)</span>)</span></span><br><span class="line">	<span class="list">(<span class="keyword"><span class="built_in">else</span></span> <span class="list">(<span class="keyword"><span class="built_in">cons</span></span> <span class="list">(<span class="keyword"><span class="built_in">car</span></span> lat)</span></span><br><span class="line">		    <span class="list">(<span class="keyword">multirember</span> a</span><br><span class="line">				<span class="list">(<span class="keyword"><span class="built_in">cdr</span></span> lat)</span>)</span>)</span>)</span>)</span>)</span>)</span>)</span>)</span>)</span></span><br></pre></td></tr></table></figure>
 </div>
 
+<ul class="org-ul">
+<li>null
+</li>
+<li>else
+</li>
+<li>eq? (car lat) a 
+</li>
+<li>(cons (car lat) (multirember a (cdr lat))  
+<hr>
+<ul class="org-ul">
+<li>null
+</li>
+<li>else
+</li>
+<li>eq? No
+</li>
+<li>(cons (car lat) (multirember a (cdr lat))
+<hr>
+<ul class="org-ul">
+<li>null
+</li>
+<li>else
+</li>
+<li>eq? yes
+</li>
+<li>forget (car lat) &#x76F4;&#x63A5; multirember
+<hr>
+</li>
+<li>null? lat
+</li>
+<li>eq?No 
+</li>
+<li>(cons (car lat) (multirember a (cdr lat))
+<hr>
 
+<ul class="org-ul">
+<li>null
+</li>
+<li>eq? Yes!
+</li>
+<li>forget (car lat)&#x76F4;&#x63A5; multirember
+<hr>
+<ul class="org-ul">
+<li>null  Yes!
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>
+Not Finished Yet
+</p>
+</div>
+</div>
+<div id="outline-container-sec-3-9" class="outline-3">
+<h3 id="sec-3-9"><span class="section-number-3">3.9</span> Example multiinsertR</h3>
+</div>
+<div id="outline-container-sec-3-10" class="outline-3">
+<h3 id="sec-3-10"><span class="section-number-3">3.10</span> The Fourth Commandment</h3>
+<div class="outline-text-3" id="text-3-10">
+<p>
+Always change at least one argument while recurring.It must be changed to be closer to termination.The changing argument must be tested in the termination condition: When using <b>cdr</b>, test termination with null?
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Number of Games</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Plus +</h3>
+<div class="outline-text-3" id="text-4-1">
 <div class="org-src-container">
 
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">My_funcation</span><br></pre></td></tr></table></figure>
+<figure class="highlight scheme"><table><tr><td class="code"><pre><span class="line"><span class="list">(<span class="keyword"><span class="built_in">define</span></span> +</span><br><span class="line">  <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">n</span> m)</span></span><br><span class="line">    <span class="list">(<span class="keyword"><span class="built_in">cond</span></span></span><br><span class="line">     <span class="list">(<span class="list">(<span class="keyword"><span class="built_in">zero?</span></span> m)</span> n)</span></span><br><span class="line">     <span class="list">(<span class="keyword"><span class="built_in">else</span></span> <span class="list">(<span class="keyword">add1</span> <span class="list">(<span class="keyword"><span class="built_in">+</span></span> n <span class="list">(<span class="keyword">sub1</span> m)</span>)</span>)</span>)</span>)</span>)</span>)</span></span><br></pre></td></tr></table></figure>
 </div>
-
-
+<ul class="org-ul">
+<li>&#x8FDD;&#x80CC;&#x4E86; The First Commandment:Always aks null?
+</li>
+<li>&#x4F46;&#x662F;&#x7528; zero&#xFF1F;&#x4EE3;&#x66FF; null&#xFF1F;
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Subduction</h3>
+<div class="outline-text-3" id="text-4-2">
 <div class="org-src-container">
 
-<figure class="highlight scheme"><table><tr><td class="code"><pre><span class="line"><span class="comment">; Hello world as a variable</span></span><br><span class="line"><span class="list">(<span class="keyword"><span class="built_in">define</span></span> vhello <span class="string">&quot;Hello world&quot;</span>)</span>     <span class="comment">;1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">; Hello world as a function</span></span><br><span class="line"><span class="list">(<span class="keyword"><span class="built_in">define</span></span> fhello <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">()</span>         <span class="comment">;2</span></span><br><span class="line">	 <span class="string">&quot;Hello world&quot;</span>)</span>)</span></span><br><span class="line"><span class="list">(<span class="keyword">cd</span> <span class="string">&quot;C:\\doc\\scheme&quot;</span>)</span></span><br><span class="line"><span class="comment">;Value 14: #[pathname 14 &quot;c:\\doc\\scheme\\&quot;]</span></span><br><span class="line"></span><br><span class="line"><span class="list">(<span class="keyword"><span class="built_in">load</span></span> <span class="string">&quot;hello.scm&quot;</span>)</span></span><br><span class="line"><span class="comment">;Loading &quot;hello.scm&quot; -- done</span></span><br><span class="line"><span class="comment">;Value: fhello</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight scheme"><table><tr><td class="code"><pre><span class="line"><span class="list">(<span class="keyword"><span class="built_in">define</span></span> -</span><br><span class="line">  <span class="list">(<span class="keyword"><span class="built_in">lambda</span></span> <span class="list">(<span class="keyword">n</span> m)</span></span><br><span class="line">    <span class="list">(<span class="keyword"><span class="built_in">cond</span></span></span><br><span class="line">     <span class="list">(<span class="list">(<span class="keyword"><span class="built_in">zero?</span></span> m)</span> n)</span></span><br><span class="line">     <span class="list">(<span class="keyword"><span class="built_in">else</span></span> <span class="list">(<span class="keyword">sub1</span> <span class="list">(<span class="keyword"><span class="built_in">-</span></span> n <span class="list">(<span class="keyword">sub1</span> m)</span>)</span>)</span>)</span>)</span>)</span>)</span></span><br></pre></td></tr></table></figure>
 </div>
-
-<div class="org-src-container">
-
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">squares</span><span class="params">(n)</span>:</span></span><br><span class="line">    <span class="string">&apos;&apos;&apos;Yields the squares from 0 to n-1 squared.&apos;&apos;&apos;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">	<span class="keyword">yield</span> i * i</span><br><span class="line"></span><br><span class="line">g = squares(<span class="number">4</span>)</span><br><span class="line"><span class="keyword">print</span> g.next()</span><br><span class="line"><span class="keyword">print</span> g.next()</span><br><span class="line"><span class="keyword">print</span> g.next()</span><br><span class="line"><span class="keyword">print</span> g.next()</span><br></pre></td></tr></table></figure>
+<ul class="org-ul">
+<li></li>
+</ul>
 </div>
+</div>
+<div id="outline-container-sec-4-3" class="outline-3">
+<h3 id="sec-4-3"><span class="section-number-3">4.3</span> tup</h3>
+<div class="outline-text-3" id="text-4-3">
+<ul class="org-ul">
+<li>((null? tup) 0) &#x548C; ((null? l)(quote()))&#x7C7B;&#x4F3C;&#xFF0C;&#x5728; list &#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x7ECF;&#x5E38;&#x7528;
+</li>
+<li>tup &#x548C; lat &#x7684;&#x5B9A;&#x4E49;
+</li>
+<li>Natural Recursion &#x4E2D;&#x7684;&#x7528;&#x6CD5;
+<ul class="org-ul">
+<li>list&#xFF1A;(cdr lat)
+</li>
+<li>tup  : (cdr tup)
+</li>
+</ul>
+</li>
+</ul>
+<p>
+&#x2014; &#x8981;&#x95EE;&#x591A;&#x5C11;&#x95EE;&#x9898;
+</p>
+<ul class="org-ul">
+<li>list&#xFF1A;&#x4E24;&#x4E2A;
+</li>
+<li>Tup: &#x4E24;&#x4E2A;
+</li>
+</ul>
 </div>
 </div>
 </div>
