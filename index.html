@@ -1418,6 +1418,455 @@ Always change at least one argument while recurring.It must be changed to be clo
             
               
                 
+                <a class="post-title-link" href="/2016/04/03/Introduction to Matplotlib's internals/" itemprop="url">
+                  Introduction to Matplotlib's internals
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-04-03T10:51:13+08:00" content="Apr 3 2016">
+              Apr 3 2016
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Instructions</a></li>
+<li><a href="#sec-2">2. Figures and Subplots</a>
+<ul>
+<li><a href="#sec-2-1">2.1. add<sub>subplot</sub> &#x4E2D;&#x4E09;&#x4E2A;&#x53C2;&#x6570;&#x7684;&#x542B;&#x4E49;</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3. Axes</a></li>
+<li><a href="#sec-4">4. Adding data</a></li>
+<li><a href="#sec-5">5. Customizing the plot</a></li>
+<li><a href="#sec-6">6. Setting mulitple attibuted easily</a></li>
+<li><a href="#sec-7">7. Multiple subplots</a></li>
+<li><a href="#sec-8">8. Adding data to multiple subplots</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Instructions</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Use the Matplotlib .scatter() method to create a scatter plot with the month on the x-axis and temperature on the y-axis and then display the plot.
+</p>
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">import matplotlib.pyplot as plt
+%matplotlib inline
+
+# 2 simple lists of values
+month = [1,1,2,2,4,5,5,7,8,10,10,11,12,12]
+temperature = [32,15,40,35,50,55,52,80,85,60,57,45,35,105]
+plt.scatter(month, temperature)
+plt.show()</span><br></pre></td></tr></table></figure>
+</div>
+
+
+<div class="figure">
+<p><img src="file:///tmp/itmi1.png" alt="itmi1.png">
+</p>
+</div>
+
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">fig = plt.figure(figsize=(10,7))
+ax = fig.add_subplot(1,1,1)
+plt.show()
+
+# Print the types
+print(type(fig))
+print(type(ax))</span><br></pre></td></tr></table></figure>
+</div>
+
+<pre class="example">
+&lt;class &apos;matplotlib.figure.Figure&apos;&gt;
+&lt;class &apos;matplotlib.axes._subplots.AxesSubplot&apos;&gt;
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Figures and Subplots</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Figure is the top-level Matplotlib object
+</p>
+<ul class="org-ul">
+<li>The figsize(w,h) w = width , h = height
+</li>
+<li>dpi parameter lets you specify the density, in dotd per inch
+</li>
+<li>.add<sub>subplot</sub>() method lets you add individual plots the Figure instance
+</li>
+</ul>
+<p>
+<b>Subplot</b> is rhe Matplotlib object the you use to create the axes for a plots
+</p>
+<ul class="org-ul">
+<li>call plt.figure() to instance a new Figure instance
+</li>
+<li>assign the Figure to the variable fig
+</li>
+<li>call .add<sub>subplot</sub>(1,1,1) on the Figure instance to add an empty plot
+</li>
+<li>assign the Subplot to the variable ax
+</li>
+<li>call plt.show() to display our wonderful creation
+</li>
+</ul>
+<p>
+You&apos;ll notice we passed 1,1,1 into the Figure&apos;s .add<sub>subplot</sub>() method. This style is called grid notation and you use it to express the layout of plots and which plot you want returned from that function call. You can break grid notation down into the 3 parameters:
+</p>
+</div>
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> add<sub>subplot</sub> &#x4E2D;&#x4E09;&#x4E2A;&#x53C2;&#x6570;&#x7684;&#x542B;&#x4E49;</h3>
+<div class="outline-text-3" id="text-2-1">
+<ul class="org-ul">
+<li>the first parameters refers to the row number 1
+</li>
+<li>the second parameter refers to the column number 2
+</li>
+<li>the third parameter refers to the nth plot in the Figure to be returned
+</li>
+</ul>
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">fig = plt.figure(figsize=(10,7))
+ax = fig.add_subplot(1, 1, 1)
+plt.show()
+
+# Print the types
+print(type(fig))
+print(type(ax))</span><br></pre></td></tr></table></figure>
+</div>
+
+
+<div class="figure">
+<p><img src="file:///tmp/itmi2.png" alt="itmi2.png">
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Axes</h2>
+<div class="outline-text-2" id="text-3">
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">import numpy as np
+month = [1,1,2,2,4,5,5,7,8,10,10,11,12,12]
+temperature = [32,15,40,35,50,55,52,80,85,60,57,45,35,105]
+
+fig = plt.figure()
+ax = fig.add_subplot(1,1,1)
+ax.set_xlim([0,14])
+plt.show()
+fig = plt.figure()
+ax = fig.add_subplot(1,1,1)
+ax.set_xlim([np.min(month), np.max(month)])
+ax.set_ylim([np.min(temperature), np.max(temperature)])
+plt.show()</span><br></pre></td></tr></table></figure>
+</div>
+
+
+<div class="figure">
+<p><img src="file:///tmp/itmi3.png" alt="itmi3.png">
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Adding data</h2>
+<div class="outline-text-2" id="text-4">
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">import numpy as np
+
+month = [1,1,2,2,4,5,5,7,8,10,10,11,12,12]
+temperature = [32,15,40,35,50,55,52,80,85,60,57,45,35,105]
+
+fig = plt.figure()
+ax = fig.add_subplot(1,1,1)
+ax.set_xlim([np.min(month),np.max(month)])
+ax.set_ylim([np.min(temperature), np.max(temperature)])
+
+color = &apos;darkblue&apos;
+marker = &apos;v&apos;
+
+# run the .scatter() method, params: color, marker
+ax.scatter(month, temperature, color=color, marker=marker)
+plt.show()</span><br></pre></td></tr></table></figure>
+</div>
+
+
+<div class="figure">
+<p><img src="file:///tmp/itim4.png" alt="itim4.png">
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Customizing the plot</h2>
+<div class="outline-text-2" id="text-5">
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">month = [1,1,2,2,4,5,5,7,8,10,10,11,12,12]
+temperature = [32,15,40,35,50,55,52,80,85,60,57,45,35,105]
+fig = plt.figure()
+ax = fig.add_subplot(1,1,1)
+ax.set_xlim(0,13)
+ax.set_ylim(10, 110)
+ax.set_xlabel(&apos;Month&apos;)
+ax.set_ylabel(&apos;Temperature&apos;)
+ax.set_title(&apos;Year Round Temperature&apos;)
+
+# run the .scatter() method, params: color, marker
+ax.scatter(month, temperature, color=&apos;darkblue&apos;, marker=&apos;o&apos;)
+plt.show()</span><br></pre></td></tr></table></figure>
+</div>
+
+
+<div class="figure">
+<p><img src="file:///tmp/itim4.png" alt="itim4.png">
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Setting mulitple attibuted easily</h2>
+<div class="outline-text-2" id="text-6">
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">month = [1,1,2,2,4,5,5,7,8,10,10,11,12,12]
+temperature = [32,15,40,35,50,55,52,80,85,60,57,45,35,105]
+
+fig = plt.figure()
+ax = fig.add_subplot(1,1,1)
+
+ax.set(xlim=(0,13), ylim=(10,110))
+ax.scatter(month, temperature, color=&apos;darkblue&apos;, marker=&apos;o&apos;) #add xlabel, ylabel, and title
+plt.show()
+ax.set(xlim=(0,13), ylim=(10,110), xlabel=&apos;Month&apos;, ylabel=&apos;Temperature&apos;, title=&apos;2014&apos;)
+ax.scatter(month, temperature, color=&apos;darkblue&apos;, marker=&apos;o&apos;)
+plt.show()</span><br></pre></td></tr></table></figure>
+</div>
+
+
+<div class="figure">
+<p><img src="file:///tmp/itim5.png" alt="itim5.png">
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> Multiple subplots</h2>
+<div class="outline-text-2" id="text-7">
+<ul class="org-ul">
+<li>fig.add<sub>subplot</sub>(nrows, ncols, plot<sub>number</sub>)
+</li>
+<li>ax1 = fig.add<sub>subplot</sub>(2, 1, 1)
+ax2 = fig.add<sub>subplot</sub>(2, 1, 2)
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">fig = plt.figure()
+ax1 = fig.add_subplot(1,1,1)
+ax2 = fig.add_subplot(2,1,1)</span><br></pre></td></tr></table></figure>
+</div>
+
+
+<div class="figure">
+<p><img src="file:///tmp/it6.png" alt="it6.png">
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> Adding data to multiple subplots</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+Instructions
+</p>
+
+<p>
+Generate a grid of plots, 2 columns by 1 row, with the following attributes:
+</p>
+
+<ul class="org-ul">
+<li>The left plot is a scatter plot with month<sub>2013</sub> on the x-axis and temperature<sub>2013</sub> on the y-axis
+</li>
+<li>The left plot has a title of 2013
+</li>
+<li>The left plot&apos;s dots are darkblue, circular marker (&apos;o&apos;)
+</li>
+<li>The right plot is a scatter plot with month<sub>2014</sub> on the x-axis and temperature<sub>2014</sub> on the y-axis
+</li>
+<li>The right plot has a title of 2014
+</li>
+<li>The right plot&apos;s dots are darkgreen, circular marker (&apos;o&apos;)
+</li>
+<li>Both plots have the same x and y axes ranges as before (x: 0 to 13, y: 10 to 110)
+</li>
+</ul>
+<p>
+This exercise will help you practice all of the concepts you&apos;ve learned in this lesson.
+</p>
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">month_2013 = [1,2,3,4,5,6,7,8,9,10,11,12]
+temperature_2013 = [32,18,40,40,50,45,52,70,85,60,57,45]
+month_2014 = [1,2,3,4,5,6,7,8,9,10,11,12]
+temperature_2014 = [35,28,35,30,40,55,50,71,75,70,67,49]
+month_2013 = [1,2,3,4,5,6,7,8,9,10,11,12]
+temperature_2013 = [32,18,40,40,50,45,52,70,85,60,57,45]
+month_2014 = [1,2,3,4,5,6,7,8,9,10,11,1000]
+temperature_2014 = [35,28,35,30,40,55,50,71,75,70,67,49]
+
+fig = plt.figure()
+ax1 = fig.add_subplot(2,1,1)
+ax2 = fig.add_subplot(2,1,2)
+
+ax1.set(xlim=(0,1000), ylim=(10,110), title=&apos;2013&apos;)
+ax2.set(xlim=(0,13), ylim=(10,110), title=&apos;2014&apos;)
+
+ax1.scatter(month_2013, temperature_2013, color=&apos;darkblue&apos;, marker=&apos;o&apos;)
+ax2.scatter(month_2014, temperature_2014, color=&apos;darkgreen&apos;, marker=&apos;o&apos;)
+
+plt.show()</span><br></pre></td></tr></table></figure>
+</div>
+
+
+<div class="figure">
+<p><img src="file:///tmp/it7.png" alt="it7.png">
+</p>
+</div>
+
+<div class="org-src-container">
+
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">curl -<span class="number">0</span> https://raw.githubusercontent.com/jpatokal/openflights/master/data/routes.dat</span><br></pre></td></tr></table></figure>
+</div>
+
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">import pandas as pd
+
+airlines = pd.read_csv(&apos;airlines.dat&apos;)
+airports = pd.read_csv(&apos;airports.dat&apos;)
+routes  = pd.read_csv(&apos;routes.dat&apos;)</span><br></pre></td></tr></table></figure>
+</div>
+
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">print airports.head()</span><br></pre></td></tr></table></figure>
+</div>
+
+<pre class="example">
+   1                      Goroka      Goroka.1  Papua New Guinea  GKA  AYGA  \
+0  2                      Madang        Madang  Papua New Guinea  MAG  AYMD   
+1  3                 Mount Hagen   Mount Hagen  Papua New Guinea  HGU  AYMH   
+2  4                      Nadzab        Nadzab  Papua New Guinea  LAE  AYNZ   
+3  5  Port Moresby Jacksons Intl  Port Moresby  Papua New Guinea  POM  AYPY   
+4  6                  Wewak Intl         Wewak  Papua New Guinea  WWK  AYWK   
+
+   -6.081689  145.391881  5282  10  U  Pacific/Port_Moresby  
+0  -5.207083  145.788700    20  10  U  Pacific/Port_Moresby  
+1  -5.826789  144.295861  5388  10  U  Pacific/Port_Moresby  
+2  -6.569828  146.726242   239  10  U  Pacific/Port_Moresby  
+3  -9.443383  147.220050   146  10  U  Pacific/Port_Moresby  
+4  -3.583828  143.669186    19  10  U  Pacific/Port_Moresby
+</pre>
+</div>
+</div>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/03/30/Boken_basic(1)/" itemprop="url">
                   Bokeh Basic(1)
                 </a>
@@ -2711,8 +3160,8 @@ temp1 := \(\theta_{1} - \alpha\frac{\vartheta}{\vartheta\theta_{1}}J(\theta_{0},
             
               
                 
-                <a class="post-title-link" href="/2015/10/25/Test/" itemprop="url">
-                  Title here
+                <a class="post-title-link" href="/2016/03/15/Data-visualization-and-exploration/" itemprop="url">
+                  Data visualization and exploration
                 </a>
               
             
@@ -2725,8 +3174,8 @@ temp1 := \(\theta_{1} - \alpha\frac{\vartheta}{\vartheta\theta_{1}}J(\theta_{0},
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-10-25T19:25:01+08:00" content="Oct 25 2015">
-              Oct 25 2015
+            <time itemprop="dateCreated" datetime="2016-03-15T00:03:34+08:00" content="Mar 15 2016">
+              Mar 15 2016
             </time>
           </span>
 
@@ -2758,97 +3207,210 @@ temp1 := \(\theta_{1} - \alpha\frac{\vartheta}{\vartheta\theta_{1}}J(\theta_{0},
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1. &#x8D5B;&#x535A;&#x5B66;&#x4E60;&#x6CD5;&#xFF1A;&#x5341;&#x4E8C;&#x4E2A;&#x95EE;&#x9898;</a>
-<ul>
-<li><a href="#sec-1-1">1.1. &#x6211;&#x9605;&#x8BFB;&#x8FD9;&#x7BC7;&#x6587;&#x7AE0;&#x7684;&#x76EE;&#x7684;&#x662F;&#x4EC0;&#x4E48;</a></li>
-<li><a href="#sec-1-2">1.2. &#x5173;&#x4E8E;&#x8FD9;&#x4E2A;&#x8BDD;&#x9898;&#xFF0C;&#x6211;&#x5DF2;&#x7ECF;&#x77E5;&#x9053;&#x4E9B;&#x4EC0;&#x4E48;</a>
-<ul>
-<li><a href="#sec-1-2-1">1.2.1. &#x70ED;&#x8EAB;&#x7684;&#x597D;&#x5904;</a></li>
-</ul>
-</li>
-<li><a href="#sec-1-3">1.3. &#x8FD9;&#x7BC7;&#x6587;&#x7AE0;&#x7684;&#x4E3B;&#x8981;&#x5185;&#x5BB9;&#x662F;&#x4EC0;&#x4E48;</a></li>
-<li><a href="#sec-1-4">1.4. &#x4F5C;&#x8005;&#x63A5;&#x4E0B;&#x6765;&#x8981;&#x8BF4;&#x4EC0;&#x4E48;</a></li>
-<li><a href="#sec-1-5">1.5. &#x201C;&#x4E13;&#x4E1A;&#x95EE;&#x9898;&#x201D;&#x662F;&#x4EC0;&#x4E48;</a></li>
-<li><a href="#sec-1-6">1.6. &#x8FD9;&#x7BC7;&#x6587;&#x7AE0;&#x90A3;&#x4E9B;&#x662F;&#x91CD;&#x8981;&#x4FE1;&#x606F;</a></li>
-<li><a href="#sec-1-7">1.7. &#x9488;&#x5BF9;&#x8FD9;&#x4E9B;&#x4FE1;&#x606F;&#xFF0C;&#x6211;&#x8981;&#x5982;&#x4F55;&#x8FDB;&#x884C;&#x6539;&#x8FF0;&#x548C;&#x603B;&#x7ED3;</a></li>
-<li><a href="#sec-1-8">1.8. &#x6211;&#x5E94;&#x8BE5;&#x5982;&#x4F55;&#x603B;&#x7ED3;&#x8FD9;&#x4E9B;&#x4FE1;&#x606F;</a></li>
-<li><a href="#sec-1-9">1.9. &#x6211;&#x5982;&#x4F55;&#x7528;&#x56FE;&#x8868;&#x6765;&#x8BF4;&#x660E;&#x8FD9;&#x4E9B;&#x4FE1;&#x606F;</a></li>
-<li><a href="#sec-1-10">1.10. &#x5BF9;&#x6211;&#x800C;&#x8A00;&#xFF0C;&#x8FD9;&#x4E9B;&#x4FE1;&#x606F;&#x7684;&#x8BB0;&#x5FC6;&#x70B9;&#x662F;&#x4EC0;&#x4E48;</a></li>
-<li><a href="#sec-1-11">1.11. <span class="done DONE">DONE</span> &#x8FD9;&#x4E9B;&#x4FE1;&#x606F;&#x5982;&#x4F55;&#x624D;&#x80FD;&#x4E0E;&#x6211;&#x5DF2;&#x77E5;&#x7684;&#x77E5;&#x8BC6;&#x7ED3;&#x5408;&#x8D77;&#x6765;</a></li>
-</ul>
-</li>
+<li><a href="#sec-1">1. Data exploration</a></li>
+<li><a href="#sec-2">2. Histograms</a></li>
+<li><a href="#sec-3">3. Box plots</a></li>
+<li><a href="#sec-4">4. Explanation:box plots</a></li>
+<li><a href="#sec-5">5. Multiple plots in one chart</a></li>
 </ul>
 </div>
 </div>
-<p>
-title: Title here
-date: 2015-10-25 19:25:01
-tags:
-</p>
-<ul class="org-ul">
-<li>emacs
-</li>
-<li>hexo
-</li>
-</ul>
-<p>
-&#x2014;
-</p>
 <div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> &#x8D5B;&#x535A;&#x5B66;&#x4E60;&#x6CD5;&#xFF1A;&#x5341;&#x4E8C;&#x4E2A;&#x95EE;&#x9898;</h2>
+<h2 id="sec-1"><span class="section-number-2">1</span> Data exploration</h2>
 <div class="outline-text-2" id="text-1">
-</div><div id="outline-container-sec-1-1" class="outline-3">
-<h3 id="sec-1-1"><span class="section-number-3">1.1</span> &#x6211;&#x9605;&#x8BFB;&#x8FD9;&#x7BC7;&#x6587;&#x7AE0;&#x7684;&#x76EE;&#x7684;&#x662F;&#x4EC0;&#x4E48;</h3>
-<div class="outline-text-3" id="text-1-1">
-<p>
-&#x4E3A;&#x4E86;&#x638C;&#x63E1;&#x5B66;&#x4E60;&#x7684;&#x4E3B;&#x52A8;&#x6743;
+<ul class="org-ul">
+<li>Rank - Rank by median earnings
+</li>
+<li>Major<sub>code</sub> - Major code
+</li>
+<li>Major - Major description
+</li>
+<li>Major<sub>category</sub> - Category of major
+</li>
+<li>Total - Total number of people with major
+</li>
+<li>Sample<sub>size</sub> - Sample size (unweighted) of full-time
+</li>
+<li>Men - Male graduates
+</li>
+<li>Women - Female graduates
+</li>
+<li>ShareWomen - Women as share of total
+</li>
+<li>Employed - Number employed
+</li>
+</ul>
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">import pandas as pd
+recent_grads = pd.read_csv(&apos;recent-grads.csv&apos;)
+
+print(recent_grads.columns)
+recent_grads.head()</span><br></pre></td></tr></table></figure>
+</div>
+
+<pre class="example">
+Index([u&apos;Rank&apos;, u&apos;Major_code&apos;, u&apos;Major&apos;, u&apos;Major_category&apos;, u&apos;Total&apos;,
+       u&apos;Sample_size&apos;, u&apos;Men&apos;, u&apos;Women&apos;, u&apos;ShareWomen&apos;, u&apos;Employed&apos;,
+       u&apos;Full_time&apos;, u&apos;Part_time&apos;, u&apos;Full_time_year_round&apos;, u&apos;Unemployed&apos;,
+       u&apos;Unemployment_rate&apos;, u&apos;Median&apos;, u&apos;P25th&apos;, u&apos;P75th&apos;, u&apos;College_jobs&apos;,
+       u&apos;Non_college_jobs&apos;, u&apos;Low_wage_jobs&apos;],
+      dtype=&apos;object&apos;)
+</pre>
+</div>
+</div>
+
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Histograms</h2>
+<div class="outline-text-2" id="text-2">
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">import matplotlib.pyplot as plt
+%matplotlib inline
+columns = [&apos;Median&apos;,&apos;Sample_size&apos;]
+recent_grads.hist(column=columns)
+plt.show()</span><br></pre></td></tr></table></figure>
+</div>
+
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">import matplotlib.pyplot as plt
+
+columns = [&apos;Median&apos;,&apos;Sample_size&apos;]
+recent_grads.hist(column=columns)
+plt.show()</span><br></pre></td></tr></table></figure>
+</div>
+
+
+<div class="figure">
+<p><img src="file:///tmp/hist.png" alt="hist.png">
 </p>
 </div>
+
+<p>
+x &#x8F74;&#x7684;&#x5B57;&#x8FF9;&#x592A;&#x6A21;&#x7CCA;&#x4E86;&#xFF0C;&#x56E0;&#x4E3A;&#x5B57;&#x6570;&#x592A;&#x591A;&#x90FD;&#x91CD;&#x53E0;&#x4E86;
+</p>
+
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">import matplotlib.pyplot as plt
+
+columns = [&apos;Median&apos;,&apos;Sample_size&apos;]
+
+# Set the `layout` parameter as `(2,1)` so the graphs are displayed as 2 rows &amp; 1 column 
+# Then set `grid` parameter to `False`.
+recent_grads.hist(column=columns, layout=(2,1), grid=True,bins=50)</span><br></pre></td></tr></table></figure>
 </div>
-<div id="outline-container-sec-1-2" class="outline-3">
-<h3 id="sec-1-2"><span class="section-number-3">1.2</span> &#x5173;&#x4E8E;&#x8FD9;&#x4E2A;&#x8BDD;&#x9898;&#xFF0C;&#x6211;&#x5DF2;&#x7ECF;&#x77E5;&#x9053;&#x4E9B;&#x4EC0;&#x4E48;</h3>
-<div class="outline-text-3" id="text-1-2">
+
+
+<div class="figure">
+<p><img src="file:///tmp/hist2.png" alt="hist2.png">
+</p>
+</div>
+
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">recent_grads.hist(bins=80,column=&apos;Sample_size&apos;)</span><br></pre></td></tr></table></figure>
+</div>
+
+
+<div class="figure">
+<p><img src="file:///tmp/hist3.png" alt="hist3.png">
+</p>
+</div>
+
+<p>
+bins &#x7684;&#x9ED8;&#x8BA4;&#x503C;&#x662F; 10.
+</p>
+
 <ul class="org-ul">
-<li>&#x8FD9;&#x8BDD;&#x9898;&#x4F60;&#x60F3;&#x5230;&#x4EC0;&#x4E48;
+<li>How many majors make more than 70,000?
 </li>
-<li>&#x4F60;&#x60F3;&#x8981;&#x77E5;&#x9053;&#x4E9B;&#x4EC0;&#x4E48;&#x6D3B;&#x7740;&#x4F60;&#x5E0C;&#x671B;&#x5B66;&#x5230;&#x4E9B;&#x4EC0;&#x4E48;
+<li>How about more than 100,000?
 </li>
-<li>&#x7528;&#x901F;&#x5199;&#x7684;&#x65B9;&#x5F0F;&#x5C3D;&#x60C5;&#x7684;&#x628A;&#x4F60;&#x60F3;&#x5230;&#x7684;&#x5199;&#x5728;&#x7EB8;&#x4E0A;&#x6BD4;&#x7A7A;&#x60F3;&#x5F3A;&#x591A;&#x4E86;
+<li>What percentage of students majored in one of these high-earning majors?
+</li>
+<li>Do these high-earning graduates also have low unemployment rates?
+</li>
+
+<li>How was the survey conducted and what assumptions were made?
+</li>
+<li>Do the majors with higher sample size (Sample<sub>size</sub> column) have more overall graduates (Total column) or is this a survey response bias?
 </li>
 </ul>
 </div>
-<div id="outline-container-sec-1-2-1" class="outline-4">
-<h4 id="sec-1-2-1"><span class="section-number-4">1.2.1</span> &#x70ED;&#x8EAB;&#x7684;&#x597D;&#x5904;</h4>
+</div>
+
+
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Box plots</h2>
+<div class="outline-text-2" id="text-3">
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># Select just `Sample_size` &amp; `Major_category` columns from `recent_grads` 
+# Name the resulting DataFrame as `sample_size`
+sample_size = recent_grads[[&apos;Sample_size&apos;, &apos;Major_category&apos;]]
+
+# Run the `boxplot()` function on `sample_size` DataFrame and specify, as a parameter, 
+# that we&apos;d like a box and whisker diagram to be generated for each unique `Major_category`
+sample_size.boxplot(by=&apos;Major_category&apos;)
+
+# Format the resulting plot to make the x-axis labels (each `Major_category` value) 
+# appear vertically instead of horizontally (by rotating 90 degrees)
+plt.xticks(rotation=90)</span><br></pre></td></tr></table></figure>
+</div>
+
+
+<div class="figure">
+<p><img src="file:///tmp/hist4.png" alt="hist4.png">
+</p>
+</div>
 </div>
 </div>
 
-<div id="outline-container-sec-1-3" class="outline-3">
-<h3 id="sec-1-3"><span class="section-number-3">1.3</span> &#x8FD9;&#x7BC7;&#x6587;&#x7AE0;&#x7684;&#x4E3B;&#x8981;&#x5185;&#x5BB9;&#x662F;&#x4EC0;&#x4E48;</h3>
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Explanation:box plots</h2>
+<div class="outline-text-2" id="text-4">
+<ul class="org-ul">
+<li>&#x7B5B;&#x9009; DataFrame &#x5206;&#x6210; Sample<sub>size</sub> &#x548C; Major<sub>category</sub> &#x4E24;&#x5217;
+</li>
+<li>Sample<sub>size</sub> &#x8FD9;&#x5217;&#x8BBE;&#x7F6E;&#x6210; group
+</li>
+<li>generated a box and whisker diagram for each group using the Sample<sub>size</sub> values for that group
+</li>
+</ul>
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">recent_grads[[&apos;Total&apos;, &apos;Major_category&apos;]].boxplot(by=&apos;Major_category&apos;)
+plt.xticks(rotation=90)</span><br></pre></td></tr></table></figure>
 </div>
-<div id="outline-container-sec-1-4" class="outline-3">
-<h3 id="sec-1-4"><span class="section-number-3">1.4</span> &#x4F5C;&#x8005;&#x63A5;&#x4E0B;&#x6765;&#x8981;&#x8BF4;&#x4EC0;&#x4E48;</h3>
+
+
+<div class="figure">
+<p><img src="file:///tmp/hist5.png" alt="hist5.png">
+</p>
 </div>
-<div id="outline-container-sec-1-5" class="outline-3">
-<h3 id="sec-1-5"><span class="section-number-3">1.5</span> &#x201C;&#x4E13;&#x4E1A;&#x95EE;&#x9898;&#x201D;&#x662F;&#x4EC0;&#x4E48;</h3>
 </div>
-<div id="outline-container-sec-1-6" class="outline-3">
-<h3 id="sec-1-6"><span class="section-number-3">1.6</span> &#x8FD9;&#x7BC7;&#x6587;&#x7AE0;&#x90A3;&#x4E9B;&#x662F;&#x91CD;&#x8981;&#x4FE1;&#x606F;</h3>
 </div>
-<div id="outline-container-sec-1-7" class="outline-3">
-<h3 id="sec-1-7"><span class="section-number-3">1.7</span> &#x9488;&#x5BF9;&#x8FD9;&#x4E9B;&#x4FE1;&#x606F;&#xFF0C;&#x6211;&#x8981;&#x5982;&#x4F55;&#x8FDB;&#x884C;&#x6539;&#x8FF0;&#x548C;&#x603B;&#x7ED3;</h3>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Multiple plots in one chart</h2>
+<div class="outline-text-2" id="text-5">
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># Plot Unemployment_rate on x-axis, Median salary on y-axis, in red
+plt.scatter(recent_grads[&apos;Unemployment_rate&apos;], recent_grads[&apos;Median&apos;], color=&apos;red&apos;)
+# Plot ShareWomen (Female % in major) on x-axis, Median salary on y-axis, in blue
+plt.scatter(recent_grads[&apos;ShareWomen&apos;], recent_grads[&apos;Median&apos;], color=&apos;blue&apos;)
+plt.show()</span><br></pre></td></tr></table></figure>
 </div>
-<div id="outline-container-sec-1-8" class="outline-3">
-<h3 id="sec-1-8"><span class="section-number-3">1.8</span> &#x6211;&#x5E94;&#x8BE5;&#x5982;&#x4F55;&#x603B;&#x7ED3;&#x8FD9;&#x4E9B;&#x4FE1;&#x606F;</h3>
-</div>
-<div id="outline-container-sec-1-9" class="outline-3">
-<h3 id="sec-1-9"><span class="section-number-3">1.9</span> &#x6211;&#x5982;&#x4F55;&#x7528;&#x56FE;&#x8868;&#x6765;&#x8BF4;&#x660E;&#x8FD9;&#x4E9B;&#x4FE1;&#x606F;</h3>
-</div>
-<div id="outline-container-sec-1-10" class="outline-3">
-<h3 id="sec-1-10"><span class="section-number-3">1.10</span> &#x5BF9;&#x6211;&#x800C;&#x8A00;&#xFF0C;&#x8FD9;&#x4E9B;&#x4FE1;&#x606F;&#x7684;&#x8BB0;&#x5FC6;&#x70B9;&#x662F;&#x4EC0;&#x4E48;</h3>
-</div>
-<div id="outline-container-sec-1-11" class="outline-3">
-<h3 id="sec-1-11"><span class="section-number-3">1.11</span> <span class="done DONE">DONE</span> &#x8FD9;&#x4E9B;&#x4FE1;&#x606F;&#x5982;&#x4F55;&#x624D;&#x80FD;&#x4E0E;&#x6211;&#x5DF2;&#x77E5;&#x7684;&#x77E5;&#x8BC6;&#x7ED3;&#x5408;&#x8D77;&#x6765;</h3>
-<div class="outline-text-3" id="text-1-11">
+
+
+<div class="figure">
+<p><img src="file:///tmp/hist6.png" alt="hist6.png">
+</p>
 </div>
 </div>
 </div>
@@ -2897,8 +3459,8 @@ tags:
             
               
                 
-                <a class="post-title-link" href="/2015/09/18/是什么导致我低效率/" itemprop="url">
-                  是什么导致我低效率
+                <a class="post-title-link" href="/2016/03/11/pandas-internals-DataFrame/" itemprop="url">
+                  Pandas internals: DataFrames
                 </a>
               
             
@@ -2911,8 +3473,8 @@ tags:
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-09-18T00:50:51+08:00" content="Sep 18 2015">
-              Sep 18 2015
+            <time itemprop="dateCreated" datetime="2016-03-11T16:16:46+08:00" content="Mar 11 2016">
+              Mar 11 2016
             </time>
           </span>
 
@@ -2940,26 +3502,151 @@ tags:
       
         
           
-            <h1 id="是什么导致我低效率">是什么导致我低效率</h1><h2 id="我是如何低效率地学习Spacemacs">我是如何低效率地学习Spacemacs</h2><ol>
-<li>不读Spacemacs的官方文档<br>从装好Spacemacs后，我总共删了它三次，最后花了几小时才装好Layer和配置。删它的原因是由于它的BUG多，配置文件与Emacs不一样（其实读官方文档可以解决）。再者是一直纠结到底要不要使用Vim的编辑习惯。</li>
-<li>对于Emacs只熟悉了一些基本操作后，便没有继续深究。导致原因是想尽快地配置出自己的设置（好高骛远）。比如想用Org模式下写博客，Org模式下输出PDF文件，实现文学编程等等。</li>
-<li>从不看书，只看技术博客。</li>
-<li>不去阅读Emacs社区的WIKI</li>
-</ol>
-<h3 id="如何解决">如何解决</h3><ol>
-<li>首先读Mastering Emacs开始，不再纠结Vim的编辑方式</li>
-<li>不要对官方Wiki抱有恐惧</li>
-<li>熟悉操作，每天掌握一种快捷键方式。</li>
-<li>开始写和练Python代码。</li>
-<li>每天把学到的东西总结发到博客上</li>
-</ol>
-<h2 id="我是如何学习线性代数的">我是如何学习线性代数的</h2><p>Scott Young只花了14天就学完了MIT的线性代数。而自己现在已经超过了14天。这里不谈会做题而是真正地理解线性代数，我想知道大学里困扰我许久的线性带式里的行列式怎么来的，特征向量和特征值有什么用。</p>
-<h3 id="最近学习线性代数的方法">最近学习线性代数的方法</h3><p>良心推荐MIT的线性代数视频，Verycd上有下。</p>
-<ol>
-<li>首先要知道线性代数的本质是什么，推荐<a href="http://www.52cs.org/?p=175" target="_blank" rel="external">理解矩阵这篇文章</a></li>
-<li>找出线性代数的关键词</li>
-<li>通读一本关于线性代数的书</li>
-</ol>
+            <div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Shared index</a></li>
+<li><a href="#sec-2">2. Selecting using integer index</a></li>
+<li><a href="#sec-3">3. Custom Index</a></li>
+<li><a href="#sec-4">4. Apply() over columns</a></li>
+<li><a href="#sec-5">5. Apply() over columns, practice</a></li>
+<li><a href="#sec-6">6. Apply() over rows</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Shared index</h2>
+<div class="outline-text-2" id="text-1">
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">import pandas as pd
+fandango = pd.read_csv(&quot;fandango/fandango_score_comparison.csv&quot;)
+print fandango.head(2)
+print fandango.index</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Selecting using integer index</h2>
+<div class="outline-text-2" id="text-2">
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># First 5 rows
+print fandango[0:5]
+# From row at 140 and higher
+print fandango[140:]
+# Just row at index 50
+print fandango.iloc[50]
+# Just row at index 45 and 90
+print fandango.iloc[[45,90]]</span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+&#x8FD4;&#x56DE;&#x7B2C;&#x4E00;&#x884C;&#x548C;&#x6700;&#x540E;&#x4E00;&#x884C;&#x7684;&#x503C;
+</p>
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">first_row = 0
+last_row = fandango.shape[0] - 1
+first_last = fandango.iloc[[first_row, last_row]]
+print fandango.shape[0]
+print first_last</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Custom Index</h2>
+<div class="outline-text-2" id="text-3">
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">fandango_films = fandango.set_index(&apos;FILM&apos;, drop=False)
+print(fandango_films.index)</span><br></pre></td></tr></table></figure>
+</div>
+
+<ul class="org-ul">
+<li>set.index
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">fandango_films</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Apply() over columns</h2>
+<div class="outline-text-2" id="text-4">
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">import numpy as np
+
+# returns the data types as a Series
+types = fandango_films.dtypes
+print types
+# filter data types to just floats, index attributes returns just column names
+float_columns = types[types.values == &apos;float64&apos;].index
+# use bracket notation to filter columns to just float columns
+float_df = fandango_films[float_columns]
+
+# `x` is a Series object representing a column
+deviations = float_df.apply(lambda x: np.std(x))
+
+print(deviations)</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Apply() over columns, practice</h2>
+<div class="outline-text-2" id="text-5">
+<ul class="org-ul">
+<li>float<sub>df</sub>.apply(lambda x: x*2)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Apply() over rows</h2>
+<div class="outline-text-2" id="text-6">
+<pre class="example">
+rt_mt_user = float_df[[&apos;RT_user_norm&apos;, &apos;Metacritic_user_nom&apos;]]
+rt_mt_user.apply(lambda x: np.std(x), axis=1)
+</pre>
+
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">rt_mt_user = float_df[[&apos;RT_user_norm&apos;, &apos;Metacritic_user_nom&apos;]]
+rt_mt_deviations = rt_mt_user.apply(lambda x: np.std(x), axis=1)
+print(rt_mt_deviations[0:5])
+rt_mt_user = float_df[[&apos;RT_user_norm&apos;, &apos;Metacritic_user_nom&apos;]]
+rt_mt_means = rt_mt_user.apply(lambda x: np.mean(x), axis=1)
+print(rt_mt_means[0:5])</span><br></pre></td></tr></table></figure>
+</div>
+
+<pre class="example">
+FILM
+Avengers: Age of Ultron (2015)    0.375
+Cinderella (2015)                 0.125
+Ant-Man (2015)                    0.225
+Do You Believe? (2015)            0.925
+Hot Tub Time Machine 2 (2015)     0.150
+dtype: float64
+FILM
+Avengers: Age of Ultron (2015)    3.925
+Cinderella (2015)                 3.875
+Ant-Man (2015)                    4.275
+Do You Believe? (2015)            3.275
+Hot Tub Time Machine 2 (2015)     1.550
+dtype: float64
+</pre>
+</div>
+</div>
 
           
         
@@ -3005,8 +3692,8 @@ tags:
             
               
                 
-                <a class="post-title-link" href="/2015/07/07/Spark-中lambda的用法/" itemprop="url">
-                  Spark 中lambda的用法
+                <a class="post-title-link" href="/2016/03/11/Pandas-internals-series/" itemprop="url">
+                  Pandas internals: Series
                 </a>
               
             
@@ -3019,8 +3706,8 @@ tags:
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-07-07T00:31:39+08:00" content="Jul 7 2015">
-              Jul 7 2015
+            <time itemprop="dateCreated" datetime="2016-03-11T10:32:56+08:00" content="Mar 11 2016">
+              Mar 11 2016
             </time>
           </span>
 
@@ -3048,51 +3735,497 @@ tags:
       
         
           
-            <p><strong>runJob</strong>(rdd, partitionFunc, partitions=None, allowLocal=False)<br>Executes the given partitionFunc on the specified set of partitions, returning the result as an array of elements.</p>
-<p>If ‘partitions’ is not specified, this will run over all partitions.</p>
-<pre><code>myRDD = sc.<span class="function"><span class="title">parallelize</span><span class="params">(range(<span class="number">6</span>)</span></span>, <span class="number">3</span>)
-sc.<span class="function"><span class="title">runJob</span><span class="params">(myRDD, lambda part: [x * x for x in part])</span></span>
-</code></pre><p>输出：[0, 1, 4, 9, 16, 25]</p>
-<p><strong>filter(f)</strong><br>Return a new RDD containing only the elements that satisfy a predicate.</p>
-<pre><code>rdd = sc.<span class="function"><span class="title">parallelize</span><span class="params">([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])</span></span>
-rdd.<span class="function"><span class="title">filter</span><span class="params">(lambda x: x % <span class="number">2</span> == <span class="number">0</span>)</span></span>.<span class="function"><span class="title">collect</span><span class="params">()</span></span>
-</code></pre><p>输出：[2, 4]</p>
-<p><strong>flatMap</strong><br>Return a new RDD by first applying a function to all elements of this RDD, and then flattening the results.</p>
-<pre><code>rdd = sc.<span class="function"><span class="title">parallelize</span><span class="params">([<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</span></span>
-<span class="function"><span class="title">sorted</span><span class="params">(rdd.flatMap(lambda x: range(<span class="number">1</span>, x)</span></span>).<span class="function"><span class="title">collect</span><span class="params">()</span></span>)
-</code></pre><p>输出：[1, 1, 1, 2, 2, 3]<br>问题：为什么 有三个‘1’而‘2’只有两个<br>再试试这个方程</p>
-<pre><code>rdd = sc.<span class="function"><span class="title">parallelize</span><span class="params">([<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])</span></span>
-<span class="function"><span class="title">sorted</span><span class="params">(rdd.flatMap(lambda x: range(<span class="number">1</span>, x)</span></span>).<span class="function"><span class="title">collect</span><span class="params">()</span></span>)
-</code></pre><p>输出：[1, 1, 1, 1, 2, 2, 2, 3, 3, 4]<br><strong>flatMap</strong>输出的结果是，RDD里除最后一项所有的元素，然后按元素个数一次递减的排列。比如上面的例子，一共有4个元素，所以1有4个，然后递减到3个2，2个3，1个4，0个5，为了检查是否正确，再举下一个例子</p>
-<pre><code>rdd = sc.<span class="function"><span class="title">parallelize</span><span class="params">([<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</span></span>
-<span class="function"><span class="title">sorted</span><span class="params">(rdd.flatMap(lambda x: range(<span class="number">2</span>, x)</span></span>).<span class="function"><span class="title">collect</span><span class="params">()</span></span>)
-</code></pre><p>如果按前面的推论的话，输出的结果应该是[2,2,2,3,3,4]，但输出的结果是[2,2,3],说明我把<strong>range这个函数的用法记错了</strong>！match = range(2,3) = [2],没有最后一个3</p>
-<pre><code>rdd = sc.<span class="function"><span class="title">parallelize</span><span class="params">([<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</span></span>
-<span class="function"><span class="title">sorted</span><span class="params">(rdd.flatMap(lambda x: [(x, x)</span></span>, (x, x)]).<span class="function"><span class="title">collect</span><span class="params">()</span></span>)
-</code></pre><p> 输出结果 [(2, 2), (2, 2), (3, 3), (3, 3), (4, 4), (4, 4)]</p>
-<pre><code>rdd = sc.<span class="function"><span class="title">parallelize</span><span class="params">([<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>])</span></span>
-<span class="function"><span class="title">sorted</span><span class="params">(rdd.flatMap(lambda x: [(x, x, x)</span></span>, (x, x, x)]).<span class="function"><span class="title">collect</span><span class="params">()</span></span>)
-</code></pre><p>输出：[(2, 2, 2), (2, 2, 2), (3, 3, 3), (3, 3, 3), (4, 4, 4), (4, 4, 4)]</p>
-<p><strong>groupBy</strong><br>Return an RDD of grouped items.</p>
-<pre><code>rdd = sc.parallelize([<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">8</span>]) 
-<span class="literal">result</span> = rdd.groupBy(lambda x: x % <span class="number">2</span>).collect()
-sorted([(x, sorted(y)) <span class="keyword">for</span> (x, y) <span class="keyword">in</span> <span class="literal">result</span>])
-</code></pre><p> 输出：[(0, [2, 8]), (1, [1, 1, 3, 5])]</p>
-<p><strong>map</strong><br>Return a new RDD by applying a function to each element of this RDD.</p>
-<pre><code>rdd = sc.<span class="function"><span class="title">parallelize</span><span class="params">([<span class="string">"b"</span>, <span class="string">"a"</span>, <span class="string">"c"</span>])</span></span>
-<span class="function"><span class="title">sorted</span><span class="params">(rdd.map(lambda x: (x, <span class="number">1</span>)</span></span>).<span class="function"><span class="title">collect</span><span class="params">()</span></span>)
-</code></pre><p>输出：[(‘a’, 1), (‘b’, 1), (‘c’, 1)]      </p>
-<p><strong>reduce</strong><br>Reduces the elements of this RDD using the specified commutative and associative binary operator. Currently reduces partitions locally</p>
-<pre><code>from <span class="keyword">operator</span> import add
-sc.parallelize([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]).reduce(add)
-</code></pre><p>输出：15   </p>
-<p><strong>reduceByKey</strong><br>Merge the values for each key using an associative reduce function.</p>
-<p>This will also perform the merging locally on each mapper before sending results to a reducer, similarly to a “combiner” in MapReduce.</p>
-<p>Output will be hash-partitioned with numPartitions partitions, or the default parallelism level if numPartitions is not specified.</p>
-<pre><code>from operator import add
-rdd = sc.<span class="function"><span class="title">parallelize</span><span class="params">([(<span class="string">"a"</span>, <span class="number">1</span>)</span></span>, (<span class="string">"b"</span>, <span class="number">1</span>), (<span class="string">"a"</span>, <span class="number">1</span>)])
-<span class="function"><span class="title">sorted</span><span class="params">(rdd.reduceByKey(add)</span></span>.<span class="function"><span class="title">collect</span><span class="params">()</span></span>)
-</code></pre><p> 输出：[(‘a’, 2), (‘b’, 1)]   </p>
+            <div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Data structures</a></li>
+<li><a href="#sec-2">2. Instructions</a></li>
+<li><a href="#sec-3">3. Integer index</a></li>
+<li><a href="#sec-4">4. Custom index</a>
+<ul>
+<li><a href="#sec-4-1">4.1. pandas.Series.values &#x7684;&#x57FA;&#x672C;&#x7528;&#x6CD5;</a></li>
+<li><a href="#sec-4-2">4.2. Create a new Series object</a></li>
+</ul>
+</li>
+<li><a href="#sec-5">5. Inter index preserved</a></li>
+<li><a href="#sec-6">6. Reindexing</a></li>
+<li><a href="#sec-7">7. Sorting</a></li>
+<li><a href="#sec-8">8. Vectorized operations</a></li>
+<li><a href="#sec-9">9. Comparing and filtering</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Data structures</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li>Series (collection of values)
+</li>
+<li>DataFrame (collection of Series objects)
+</li>
+<li>Panel (collection of DataFrame objects)
+</li>
+</ul>
+<p>
+A Series object can hold many data types, including:
+</p>
+
+<ul class="org-ul">
+<li>float - for representing float values
+</li>
+<li>int - for representing integer values
+</li>
+<li>bool - for representing Boolean values
+</li>
+<li>datetime64[ns] - for representing date &amp; time, without time-zone
+</li>
+<li>datetime64[ns, tz] - for representing date &amp; time, with time-zone
+</li>
+<li>timedelta[ns] - for representing differences in dates &amp; times (seconds, minutes, etc.)
+</li>
+<li>category - for representing categorical values
+</li>
+<li>object - for representing String values
+</li>
+</ul>
+<p>
+<b>&#x5BF9;&#x7535;&#x5F71;&#x8BC4;&#x5206;&#x7684;&#x8D28;&#x7591;</b>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Instructions</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+1.&#x8BFB;&#x53D6;&#x6570;&#x636E;
+</p>
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">import pandas as pd
+fandango = pd.read_csv(&quot;fandango/fandango_score_comparison.csv&quot;)
+fandango.head(2)</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Integer index</h2>
+<div class="outline-text-2" id="text-3">
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">fandango = pd.read_csv(&apos;fandango/fandango_score_comparison.csv&apos;)
+series_film = fandango[&quot;FILM&quot;]
+series_rt = fandango[&quot;RottenTomatoes&quot;]
+#print series_rt</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Custom index</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+<a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series" target="_blank" rel="external">pandas.Series</a> 
+</p>
+</div>
+
+<div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> pandas.Series.values &#x7684;&#x57FA;&#x672C;&#x7528;&#x6CD5;</h3>
+<div class="outline-text-3" id="text-4-1">
+<ul class="org-ul">
+<li>Series &#x7684;&#x5B57;&#x7B26;&#x4E32;&#x8868;&#x73B0;&#x5F62;&#x5F0F;&#x4E3A;&#xFF1A;&#x7D22;&#x5F15;&#x503C;&#x5728;&#x5DE6;&#x8FB9;&#xFF0C;&#x503C;&#x5728;&#x53F3;&#x8FB9;
+</li>
+</ul>
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">obj = Series([4, 7, -5, 3])
+print obj
+print obj.values
+print obj.index
+
+obj2 = Series([4, 7, -5, 3], index = [&apos;d&apos;, &apos;b&apos;, &apos;a&apos;, &apos;c&apos;])
+print obj2
+print obj2.values</span><br></pre></td></tr></table></figure>
+</div>
+
+<ul class="org-ul">
+<li>&#x5176;&#x4ED6;&#x4F8B;&#x5B50;
+</li>
+</ul>
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">#print pd.Series([1, 2, 3]).values
+#print pd.Series(list(&apos;aabc&apos;)).values
+b =  pd.Series(list(&apos;aabc&apos;)).astype(&apos;category&apos;).values
+a = pd.Series(pd.date_range(&apos;20130101&apos;,periods=3,tz=&apos;US/Eastern&apos;)).values</span><br></pre></td></tr></table></figure>
+</div>
+
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">#a
+b
+#c</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Create a new Series object</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+Question:
+&#x5982;&#x679C;&#x6211;&#x4EEC;&#x4E3A;&#x4E86;&#x627E;&#x5230; Minions &#x548C; Leviathan &#x7684;&#x8BC4;&#x5206;&#xFF0C;&#x5E38;&#x89C4;&#x7684;&#x65B9;&#x6CD5;&#x662F;
+</p>
+<ul class="org-ul">
+<li>&#x627E;&#x5230; Minionsd &#x7684;&#x6240;&#x5904;&#x7684; index
+</li>
+<li>&#x7136;&#x540E;&#x7528;&#x627E;&#x5230;&#x7684; index &#x627E;&#x5230;&#x8BC4;&#x5206;
+</li>
+</ul>
+<p>
+&#x4E0A;&#x9762;&#x7684;&#x7528;&#x6CD5;&#x5F88;&#x7B28;&#x91CD;&#xFF0C;&#x7528; series &#x7684;&#x529E;&#x6CD5;&#x80FD;&#x66F4;&#x597D;&#x7684;&#x89E3;&#x51B3;
+</p>
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">from pandas import Series
+film_names = series_film.values
+rt_scores = series_rt.values
+series_custom = Series(rt_scores , index=film_names) # indes &#x6307;&#x9488;~
+series_custom[[&apos;Minions (2015)&apos;, &apos;Leviathan (2014)&apos;]]
+print series_custom
+#print rt_scores</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Inter index preserved</h2>
+<div class="outline-text-2" id="text-5">
+<ul class="org-ul">
+<li>&#x53D6;&#x51FA; index &#x7B2C;&#x4E94;&#x4E2A;&#x5230;&#x7B2C;&#x5341;&#x4E2A;&#x7684;&#x503C;
+</li>
+</ul>
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">series_custom = Series(rt_scores , index=film_names)
+series_custom[[&apos;Minions (2015)&apos;, &apos;Leviathan (2014)&apos;]]
+fiveten = series_custom[5:10]
+print (fiveten)</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Reindexing</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+&#x521B;&#x5EFA;&#x65B0;&#x7684;&#x7D22;&#x5F15;&#x5BF9;&#x8C61;
+</p>
+
+
+
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">obj = Series([4.5, 7.2, -5.3, 3.6], index = [&apos;d&apos;,&apos;b&apos;,&apos;a&apos;,&apos;c&apos;])
+print obj
+obj2 = obj.reindex([&apos;a&apos;,&apos;b&apos;,&apos;c&apos;,&apos;d&apos;,&apos;e&apos;])
+print obj2
+print obj.reindex([&apos;a&apos;,&apos;b&apos;,&apos;c&apos;,&apos;d&apos;,&apos;e&apos;], fill_value = 0)</span><br></pre></td></tr></table></figure>
+</div>
+
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">original_index = series_custom.index.tolist() #&#x8F6C;&#x5316;&#x6210;&#x5E8F;&#x5217;
+#print original_index
+sorted_index = sorted(original_index)
+sorted_by_index = series_custom.reindex(sorted_index)
+print sorted_by_index</span><br></pre></td></tr></table></figure>
+</div>
+
+<pre class="example">
+&apos;71 (2015)                                         97
+5 Flights Up (2015)                                52
+A Little Chaos (2015)                              40
+A Most Violent Year (2014)                         90
+About Elly (2015)                                  97
+Aloha (2015)                                       19
+American Sniper (2015)                             72
+American Ultra (2015)                              46
+Amy (2015)                                         97
+Annie (2014)                                       27
+Ant-Man (2015)                                     80
+Avengers: Age of Ultron (2015)                     74
+Big Eyes (2014)                                    72
+Birdman (2014)                                     92
+Black Sea (2015)                                   82
+Black or White (2015)                              39
+Blackhat (2015)                                    34
+Cake (2015)                                        49
+Chappie (2015)                                     30
+Child 44 (2015)                                    26
+Cinderella (2015)                                  85
+Clouds of Sils Maria (2015)                        89
+Danny Collins (2015)                               77
+Dark Places (2015)                                 26
+Do You Believe? (2015)                             18
+Dope (2015)                                        87
+Entourage (2015)                                   32
+Escobar: Paradise Lost (2015)                      52
+Ex Machina (2015)                                  92
+Fantastic Four (2015)                               9
+                                                   ..
+The Loft (2015)                                    11
+The Longest Ride (2015)                            31
+The Man From U.N.C.L.E. (2015)                     68
+The Overnight (2015)                               82
+The Salt of the Earth (2015)                       96
+The Second Best Exotic Marigold Hotel (2015)       62
+The SpongeBob Movie: Sponge Out of Water (2015)    78
+The Stanford Prison Experiment (2015)              84
+The Vatican Tapes (2015)                           13
+The Water Diviner (2015)                           63
+The Wedding Ringer (2015)                          27
+The Wolfpack (2015)                                84
+The Woman In Black 2 Angel of Death (2015)         22
+The Wrecking Crew (2015)                           93
+Timbuktu (2015)                                    99
+Tomorrowland (2015)                                50
+Top Five (2014)                                    86
+Trainwreck (2015)                                  85
+True Story (2015)                                  45
+Two Days, One Night (2014)                         97
+Unbroken (2014)                                    51
+Unfinished Business (2015)                         11
+Unfriended (2015)                                  60
+Vacation (2015)                                    27
+Welcome to Me (2015)                               71
+What We Do in the Shadows (2015)                   96
+When Marnie Was There (2015)                       89
+While We&apos;re Young (2015)                           83
+Wild Tales (2014)                                  96
+Woman in Gold (2015)                               52
+dtype: int64
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> Sorting</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+<a href="http://pandas.pydata.org/pandas-docs/version/0.17.0/generated/pandas.Series.sort_values.html" target="_blank" rel="external">sort.values</a>  Sort by the values along either axis
+<a href="http://pandas.pydata.org/pandas-docs/version/0.17.0/generated/pandas.Series.sort_index.html" target="_blank" rel="external">sort index</a> Sort object by labels (along an axis)
+</p>
+
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">sc2 = series_custom.sort_index() # &#x6309;&#x5B57;&#x6BCD;&#x6392;&#x5217;
+sc3 = series_custom.sort_values() # &#x6309;&#x7D22;&#x5F15;&#x503C;&#x6392;&#x5217;
+print sc2
+print(sc3[0:10])</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> Vectorized operations</h2>
+<div class="outline-text-2" id="text-8">
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">series_custom/10</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> Comparing and filtering</h2>
+<div class="outline-text-2" id="text-9">
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">series_custom &gt; 50</span><br></pre></td></tr></table></figure>
+</div>
+
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">series_greater_than_50 = series_custom[series_custom &gt; 50]</span><br></pre></td></tr></table></figure>
+</div>
+
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">series_greater_than_50</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/03/10/Challenge-Summarizing-data/" itemprop="url">
+                  Challenage:Summarizing data
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-03-10T23:52:59+08:00" content="Mar 10 2016">
+              Mar 10 2016
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. <span class="todo TODO">TODO</span> Introduction</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> <span class="todo TODO">TODO</span> Introduction</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<a href="http://fivethirtyeight.com/features/the-economic-guide-to-picking-a-college-major/" target="_blank" rel="external">To picking a collage Major</a> 
+&#x8BFB;&#x53D6;&#x5168;&#x5E74;&#x9F84;&#x6BB5;&#x7684;&#x548C;&#x8BFB;&#x53D6;&#x6700;&#x8FD1;&#x7684;&#x6BD5;&#x4E1A;&#x7684;&#x7684;&#x6570;&#x636E;
+</p>
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">import pandas as pd
+recent_grads = pd.read_csv(&quot;college-majors/recent-grads.csv&quot;)
+all_ages = pd.read_csv(&quot;college-majors/all-ages.csv&quot;)
+recent_grads.head(5)</span><br></pre></td></tr></table></figure>
+</div>
+
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">print(all_ages[&apos;Major_category&apos;].value_counts().index)</span><br></pre></td></tr></table></figure>
+</div>
+
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">print(recent_grads[&apos;Major_category&apos;].value_counts().index)</span><br></pre></td></tr></table></figure>
+</div>
+
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># All values for Major_category
+print(all_ages[&apos;Major_category&apos;].value_counts().index)
+
+all_ages_major_categories = dict()
+recent_grads_major_categories = dict()
+def calculate_major_cat_totals(df):
+    cats = df[&apos;Major_category&apos;].value_counts().index
+    counts_dictionary = dict()
+
+    for c in cats:
+	major_df = df[df[&quot;Major_category&quot;] == c]
+	total = major_df[&quot;Total&quot;].sum(axis=0)
+	counts_dictionary[c] = total
+
+    return counts_dictionary
+    return major_df
+
+all_ages_major_categories = calculate_major_cat_totals(all_ages)
+recent_grads_major_categories = calculate_major_cat_totals(recent_grads)</span><br></pre></td></tr></table></figure>
+</div>
+
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># All majors, common to both DataFrames
+majors = recent_grads[&apos;Major&apos;].value_counts().index
+
+recent_grads_lower_emp_count = 0
+all_ages_lower_emp_count = 0
+for m in majors:
+    recent_grads_row =  recent_grads[recent_grads[&apos;Major&apos;] == m]
+    all_ages_row = all_ages[all_ages[&apos;Major&apos;] == m]
+
+    recent_grads_unemp_rate = recent_grads_row[&apos;Unemployment_rate&apos;].values[0]
+    all_ages_unemp_rate = all_ages_row[&apos;Unemployment_rate&apos;].values[0]
+
+    if recent_grads_unemp_rate &lt; all_ages_unemp_rate:
+	recent_grads_lower_emp_count += 1
+    elif all_ages_unemp_rate &lt; recent_grads_unemp_rate:
+	all_ages_lower_emp_count += 1</span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+#+RES
+</p>
+</div>
+</div>
 
           
         
@@ -3120,6 +4253,10 @@ rdd = sc.<span class="function"><span class="title">parallelize</span><span clas
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
           </div>
@@ -3158,7 +4295,7 @@ rdd = sc.<span class="function"><span class="title">parallelize</span><span clas
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">12</span>
+              <span class="site-state-item-count">20</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

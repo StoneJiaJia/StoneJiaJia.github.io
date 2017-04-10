@@ -1,0 +1,1043 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="Table of Contents
+
+
+1. Data structures
+2. Instructions
+3. Integer index
+4. Custom index
+
+4.1. pandas.Series.values &amp;#x7684;&amp;#x57FA;&amp;#x672C;&amp;#x7528;&amp;#x6CD5;
+4.2. Create a new Series object
+
+
+5. Inter">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pandas internals: Series">
+<meta property="og:url" content="/2016/03/11/Pandas-internals-series/index.html">
+<meta property="og:site_name" content="思義">
+<meta property="og:description" content="Table of Contents
+
+
+1. Data structures
+2. Instructions
+3. Integer index
+4. Custom index
+
+4.1. pandas.Series.values &amp;#x7684;&amp;#x57FA;&amp;#x672C;&amp;#x7528;&amp;#x6CD5;
+4.2. Create a new Series object
+
+
+5. Inter">
+<meta property="og:updated_time" content="2016-03-11T11:29:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Pandas internals: Series">
+<meta name="twitter:description" content="Table of Contents
+
+
+1. Data structures
+2. Instructions
+3. Integer index
+4. Custom index
+
+4.1. pandas.Series.values &amp;#x7684;&amp;#x57FA;&amp;#x672C;&amp;#x7528;&amp;#x6CD5;
+4.2. Create a new Series object
+
+
+5. Inter">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> Pandas internals: Series | 思義 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">思義</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Pandas internals: Series
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-03-11T10:32:56+08:00" content="Mar 11 2016">
+              Mar 11 2016
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Data structures</a></li>
+<li><a href="#sec-2">2. Instructions</a></li>
+<li><a href="#sec-3">3. Integer index</a></li>
+<li><a href="#sec-4">4. Custom index</a>
+<ul>
+<li><a href="#sec-4-1">4.1. pandas.Series.values &#x7684;&#x57FA;&#x672C;&#x7528;&#x6CD5;</a></li>
+<li><a href="#sec-4-2">4.2. Create a new Series object</a></li>
+</ul>
+</li>
+<li><a href="#sec-5">5. Inter index preserved</a></li>
+<li><a href="#sec-6">6. Reindexing</a></li>
+<li><a href="#sec-7">7. Sorting</a></li>
+<li><a href="#sec-8">8. Vectorized operations</a></li>
+<li><a href="#sec-9">9. Comparing and filtering</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Data structures</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li>Series (collection of values)
+</li>
+<li>DataFrame (collection of Series objects)
+</li>
+<li>Panel (collection of DataFrame objects)
+</li>
+</ul>
+<p>
+A Series object can hold many data types, including:
+</p>
+
+<ul class="org-ul">
+<li>float - for representing float values
+</li>
+<li>int - for representing integer values
+</li>
+<li>bool - for representing Boolean values
+</li>
+<li>datetime64[ns] - for representing date &amp; time, without time-zone
+</li>
+<li>datetime64[ns, tz] - for representing date &amp; time, with time-zone
+</li>
+<li>timedelta[ns] - for representing differences in dates &amp; times (seconds, minutes, etc.)
+</li>
+<li>category - for representing categorical values
+</li>
+<li>object - for representing String values
+</li>
+</ul>
+<p>
+<b>&#x5BF9;&#x7535;&#x5F71;&#x8BC4;&#x5206;&#x7684;&#x8D28;&#x7591;</b>
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Instructions</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+1.&#x8BFB;&#x53D6;&#x6570;&#x636E;
+</p>
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">import pandas as pd
+fandango = pd.read_csv(&quot;fandango/fandango_score_comparison.csv&quot;)
+fandango.head(2)</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Integer index</h2>
+<div class="outline-text-2" id="text-3">
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">fandango = pd.read_csv(&apos;fandango/fandango_score_comparison.csv&apos;)
+series_film = fandango[&quot;FILM&quot;]
+series_rt = fandango[&quot;RottenTomatoes&quot;]
+#print series_rt</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Custom index</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+<a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series" target="_blank" rel="external">pandas.Series</a> 
+</p>
+</div>
+
+<div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> pandas.Series.values &#x7684;&#x57FA;&#x672C;&#x7528;&#x6CD5;</h3>
+<div class="outline-text-3" id="text-4-1">
+<ul class="org-ul">
+<li>Series &#x7684;&#x5B57;&#x7B26;&#x4E32;&#x8868;&#x73B0;&#x5F62;&#x5F0F;&#x4E3A;&#xFF1A;&#x7D22;&#x5F15;&#x503C;&#x5728;&#x5DE6;&#x8FB9;&#xFF0C;&#x503C;&#x5728;&#x53F3;&#x8FB9;
+</li>
+</ul>
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">obj = Series([4, 7, -5, 3])
+print obj
+print obj.values
+print obj.index
+
+obj2 = Series([4, 7, -5, 3], index = [&apos;d&apos;, &apos;b&apos;, &apos;a&apos;, &apos;c&apos;])
+print obj2
+print obj2.values</span><br></pre></td></tr></table></figure>
+</div>
+
+<ul class="org-ul">
+<li>&#x5176;&#x4ED6;&#x4F8B;&#x5B50;
+</li>
+</ul>
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">#print pd.Series([1, 2, 3]).values
+#print pd.Series(list(&apos;aabc&apos;)).values
+b =  pd.Series(list(&apos;aabc&apos;)).astype(&apos;category&apos;).values
+a = pd.Series(pd.date_range(&apos;20130101&apos;,periods=3,tz=&apos;US/Eastern&apos;)).values</span><br></pre></td></tr></table></figure>
+</div>
+
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">#a
+b
+#c</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Create a new Series object</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+Question:
+&#x5982;&#x679C;&#x6211;&#x4EEC;&#x4E3A;&#x4E86;&#x627E;&#x5230; Minions &#x548C; Leviathan &#x7684;&#x8BC4;&#x5206;&#xFF0C;&#x5E38;&#x89C4;&#x7684;&#x65B9;&#x6CD5;&#x662F;
+</p>
+<ul class="org-ul">
+<li>&#x627E;&#x5230; Minionsd &#x7684;&#x6240;&#x5904;&#x7684; index
+</li>
+<li>&#x7136;&#x540E;&#x7528;&#x627E;&#x5230;&#x7684; index &#x627E;&#x5230;&#x8BC4;&#x5206;
+</li>
+</ul>
+<p>
+&#x4E0A;&#x9762;&#x7684;&#x7528;&#x6CD5;&#x5F88;&#x7B28;&#x91CD;&#xFF0C;&#x7528; series &#x7684;&#x529E;&#x6CD5;&#x80FD;&#x66F4;&#x597D;&#x7684;&#x89E3;&#x51B3;
+</p>
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">from pandas import Series
+film_names = series_film.values
+rt_scores = series_rt.values
+series_custom = Series(rt_scores , index=film_names) # indes &#x6307;&#x9488;~
+series_custom[[&apos;Minions (2015)&apos;, &apos;Leviathan (2014)&apos;]]
+print series_custom
+#print rt_scores</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Inter index preserved</h2>
+<div class="outline-text-2" id="text-5">
+<ul class="org-ul">
+<li>&#x53D6;&#x51FA; index &#x7B2C;&#x4E94;&#x4E2A;&#x5230;&#x7B2C;&#x5341;&#x4E2A;&#x7684;&#x503C;
+</li>
+</ul>
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">series_custom = Series(rt_scores , index=film_names)
+series_custom[[&apos;Minions (2015)&apos;, &apos;Leviathan (2014)&apos;]]
+fiveten = series_custom[5:10]
+print (fiveten)</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Reindexing</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+&#x521B;&#x5EFA;&#x65B0;&#x7684;&#x7D22;&#x5F15;&#x5BF9;&#x8C61;
+</p>
+
+
+
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">obj = Series([4.5, 7.2, -5.3, 3.6], index = [&apos;d&apos;,&apos;b&apos;,&apos;a&apos;,&apos;c&apos;])
+print obj
+obj2 = obj.reindex([&apos;a&apos;,&apos;b&apos;,&apos;c&apos;,&apos;d&apos;,&apos;e&apos;])
+print obj2
+print obj.reindex([&apos;a&apos;,&apos;b&apos;,&apos;c&apos;,&apos;d&apos;,&apos;e&apos;], fill_value = 0)</span><br></pre></td></tr></table></figure>
+</div>
+
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">original_index = series_custom.index.tolist() #&#x8F6C;&#x5316;&#x6210;&#x5E8F;&#x5217;
+#print original_index
+sorted_index = sorted(original_index)
+sorted_by_index = series_custom.reindex(sorted_index)
+print sorted_by_index</span><br></pre></td></tr></table></figure>
+</div>
+
+<pre class="example">
+&apos;71 (2015)                                         97
+5 Flights Up (2015)                                52
+A Little Chaos (2015)                              40
+A Most Violent Year (2014)                         90
+About Elly (2015)                                  97
+Aloha (2015)                                       19
+American Sniper (2015)                             72
+American Ultra (2015)                              46
+Amy (2015)                                         97
+Annie (2014)                                       27
+Ant-Man (2015)                                     80
+Avengers: Age of Ultron (2015)                     74
+Big Eyes (2014)                                    72
+Birdman (2014)                                     92
+Black Sea (2015)                                   82
+Black or White (2015)                              39
+Blackhat (2015)                                    34
+Cake (2015)                                        49
+Chappie (2015)                                     30
+Child 44 (2015)                                    26
+Cinderella (2015)                                  85
+Clouds of Sils Maria (2015)                        89
+Danny Collins (2015)                               77
+Dark Places (2015)                                 26
+Do You Believe? (2015)                             18
+Dope (2015)                                        87
+Entourage (2015)                                   32
+Escobar: Paradise Lost (2015)                      52
+Ex Machina (2015)                                  92
+Fantastic Four (2015)                               9
+                                                   ..
+The Loft (2015)                                    11
+The Longest Ride (2015)                            31
+The Man From U.N.C.L.E. (2015)                     68
+The Overnight (2015)                               82
+The Salt of the Earth (2015)                       96
+The Second Best Exotic Marigold Hotel (2015)       62
+The SpongeBob Movie: Sponge Out of Water (2015)    78
+The Stanford Prison Experiment (2015)              84
+The Vatican Tapes (2015)                           13
+The Water Diviner (2015)                           63
+The Wedding Ringer (2015)                          27
+The Wolfpack (2015)                                84
+The Woman In Black 2 Angel of Death (2015)         22
+The Wrecking Crew (2015)                           93
+Timbuktu (2015)                                    99
+Tomorrowland (2015)                                50
+Top Five (2014)                                    86
+Trainwreck (2015)                                  85
+True Story (2015)                                  45
+Two Days, One Night (2014)                         97
+Unbroken (2014)                                    51
+Unfinished Business (2015)                         11
+Unfriended (2015)                                  60
+Vacation (2015)                                    27
+Welcome to Me (2015)                               71
+What We Do in the Shadows (2015)                   96
+When Marnie Was There (2015)                       89
+While We&apos;re Young (2015)                           83
+Wild Tales (2014)                                  96
+Woman in Gold (2015)                               52
+dtype: int64
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> Sorting</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+<a href="http://pandas.pydata.org/pandas-docs/version/0.17.0/generated/pandas.Series.sort_values.html" target="_blank" rel="external">sort.values</a>  Sort by the values along either axis
+<a href="http://pandas.pydata.org/pandas-docs/version/0.17.0/generated/pandas.Series.sort_index.html" target="_blank" rel="external">sort index</a> Sort object by labels (along an axis)
+</p>
+
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">sc2 = series_custom.sort_index() # &#x6309;&#x5B57;&#x6BCD;&#x6392;&#x5217;
+sc3 = series_custom.sort_values() # &#x6309;&#x7D22;&#x5F15;&#x503C;&#x6392;&#x5217;
+print sc2
+print(sc3[0:10])</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> Vectorized operations</h2>
+<div class="outline-text-2" id="text-8">
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">series_custom/10</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-9" class="outline-2">
+<h2 id="sec-9"><span class="section-number-2">9</span> Comparing and filtering</h2>
+<div class="outline-text-2" id="text-9">
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">series_custom &gt; 50</span><br></pre></td></tr></table></figure>
+</div>
+
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">series_greater_than_50 = series_custom[series_custom &gt; 50]</span><br></pre></td></tr></table></figure>
+</div>
+
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">series_greater_than_50</span><br></pre></td></tr></table></figure>
+</div>
+</div>
+</div>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/03/10/Challenge-Summarizing-data/" rel="next" title="Challenage:Summarizing data">
+                <i class="fa fa-chevron-left"></i> Challenage:Summarizing data
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/03/11/pandas-internals-DataFrame/" rel="prev" title="Pandas internals: DataFrames">
+                Pandas internals: DataFrames <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://7xkeje.com1.z0.glb.clouddn.com/Brue%20Lee.jpg"
+               alt="思義" />
+          <p class="site-author-name" itemprop="name">思義</p>
+          <p class="site-description motion-element" itemprop="description"></p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        <div class="links-of-blogroll motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">Table of Contents</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sec-1"><span class="nav-number">2.</span> <span class="nav-text">1 Data structures</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sec-2"><span class="nav-number">3.</span> <span class="nav-text">2 Instructions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sec-3"><span class="nav-number">4.</span> <span class="nav-text">3 Integer index</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sec-4"><span class="nav-number">5.</span> <span class="nav-text">4 Custom index</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sec-4-1"><span class="nav-number">5.1.</span> <span class="nav-text">4.1 pandas.Series.values 的基本用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sec-4-2"><span class="nav-number">5.2.</span> <span class="nav-text">4.2 Create a new Series object</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sec-5"><span class="nav-number">6.</span> <span class="nav-text">5 Inter index preserved</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sec-6"><span class="nav-number">7.</span> <span class="nav-text">6 Reindexing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sec-7"><span class="nav-number">8.</span> <span class="nav-text">7 Sorting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sec-8"><span class="nav-number">9.</span> <span class="nav-text">8 Vectorized operations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sec-9"><span class="nav-number">10.</span> <span class="nav-text">9 Comparing and filtering</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">思義</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+
+  
+
+
+
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.sidebar.display === 'post' || CONFIG.sidebar.display === 'always') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+
+  
+    <script type="text/javascript" src="http://cdn.staticfile.org/mathjax/2.4.0/MathJax.js"></script>
+    <script type="text/javascript" src="http://cdn.staticfile.org/mathjax/2.4.0/config/TeX-AMS-MML_HTMLorMML.js"></script>
+  
+
+
+  
+
+
+</body>
+</html>

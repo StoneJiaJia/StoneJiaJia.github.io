@@ -60,94 +60,58 @@
 <meta name="description" content="Table of Contents
 
 
-1. Introduction
-2. How to creat Data visualization
-3. Plotting Example
-4. Bokeh Style
+1. Instructions
+2. Figures and Subplots
 
-4.1. figure &amp;#x753B;&amp;#x5E03;
-4.2. Line
+2.1. addsubplot &amp;#x4E2D;&amp;#x4E09;&amp;#x4E2A;&amp;#x53C2;&amp;#x6570;&amp;#x7684;&amp;#x542B;&amp;#x4E49;
 
 
-
-
-
-
-tags:
-
-
-python
-
-data visualization
-
-
-
-
-1 Introd">
+3. Axes
+4. Adding data
+5. Customizing the plot
+6. Setti">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Bokeh Basic(1)">
-<meta property="og:url" content="/2016/03/30/Boken_basic(1)/index.html">
+<meta property="og:title" content="Introduction to Matplotlib's internals">
+<meta property="og:url" content="/2016/04/03/Introduction to Matplotlib's internals/index.html">
 <meta property="og:site_name" content="思義">
 <meta property="og:description" content="Table of Contents
 
 
-1. Introduction
-2. How to creat Data visualization
-3. Plotting Example
-4. Bokeh Style
+1. Instructions
+2. Figures and Subplots
 
-4.1. figure &amp;#x753B;&amp;#x5E03;
-4.2. Line
+2.1. addsubplot &amp;#x4E2D;&amp;#x4E09;&amp;#x4E2A;&amp;#x53C2;&amp;#x6570;&amp;#x7684;&amp;#x542B;&amp;#x4E49;
 
 
-
-
-
-
-tags:
-
-
-python
-
-data visualization
-
-
-
-
-1 Introd">
-<meta property="og:image" content="http://7xkeje.com1.z0.glb.clouddn.com/Screen%20Shot%202016-03-30%20at%204.18.58%20AM.png">
-<meta property="og:image" content="http://7xkeje.com1.z0.glb.clouddn.com/Screen%20Shot%202016-03-30%20at%204.17.09%20AM.png">
-<meta property="og:updated_time" content="2016-03-30T03:05:36.000Z">
+3. Axes
+4. Adding data
+5. Customizing the plot
+6. Setti">
+<meta property="og:image" content="/file:///tmp/itmi1.png">
+<meta property="og:image" content="/file:///tmp/itmi2.png">
+<meta property="og:image" content="/file:///tmp/itmi3.png">
+<meta property="og:image" content="/file:///tmp/itim4.png">
+<meta property="og:image" content="/file:///tmp/itim4.png">
+<meta property="og:image" content="/file:///tmp/itim5.png">
+<meta property="og:image" content="/file:///tmp/it6.png">
+<meta property="og:image" content="/file:///tmp/it7.png">
+<meta property="og:updated_time" content="2016-04-03T02:51:21.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Bokeh Basic(1)">
+<meta name="twitter:title" content="Introduction to Matplotlib's internals">
 <meta name="twitter:description" content="Table of Contents
 
 
-1. Introduction
-2. How to creat Data visualization
-3. Plotting Example
-4. Bokeh Style
+1. Instructions
+2. Figures and Subplots
 
-4.1. figure &amp;#x753B;&amp;#x5E03;
-4.2. Line
+2.1. addsubplot &amp;#x4E2D;&amp;#x4E09;&amp;#x4E2A;&amp;#x53C2;&amp;#x6570;&amp;#x7684;&amp;#x542B;&amp;#x4E49;
 
 
-
-
-
-
-tags:
-
-
-python
-
-data visualization
-
-
-
-
-1 Introd">
-<meta name="twitter:image" content="http://7xkeje.com1.z0.glb.clouddn.com/Screen%20Shot%202016-03-30%20at%204.18.58%20AM.png">
+3. Axes
+4. Adding data
+5. Customizing the plot
+6. Setti">
+<meta name="twitter:image" content="/file:///tmp/itmi1.png">
 
 
 
@@ -165,7 +129,7 @@ data visualization
   };
 </script>
 
-  <title> Bokeh Basic(1) | 思義 </title>
+  <title> Introduction to Matplotlib's internals | 思義 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -285,7 +249,7 @@ data visualization
             
             
               
-                Bokeh Basic(1)
+                Introduction to Matplotlib's internals
               
             
           </h1>
@@ -297,8 +261,8 @@ data visualization
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-03-30T04:22:00+08:00" content="Mar 30 2016">
-              Mar 30 2016
+            <time itemprop="dateCreated" datetime="2016-04-03T10:51:13+08:00" content="Apr 3 2016">
+              Apr 3 2016
             </time>
           </span>
 
@@ -328,170 +292,361 @@ data visualization
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#sec-1">1. Introduction</a></li>
-<li><a href="#sec-2">2. How to creat Data visualization</a></li>
-<li><a href="#sec-3">3. Plotting Example</a></li>
-<li><a href="#sec-4">4. Bokeh Style</a>
+<li><a href="#sec-1">1. Instructions</a></li>
+<li><a href="#sec-2">2. Figures and Subplots</a>
 <ul>
-<li><a href="#sec-4-1">4.1. figure &#x753B;&#x5E03;</a></li>
-<li><a href="#sec-4-2">4.2. Line</a></li>
+<li><a href="#sec-2-1">2.1. add<sub>subplot</sub> &#x4E2D;&#x4E09;&#x4E2A;&#x53C2;&#x6570;&#x7684;&#x542B;&#x4E49;</a></li>
 </ul>
 </li>
+<li><a href="#sec-3">3. Axes</a></li>
+<li><a href="#sec-4">4. Adding data</a></li>
+<li><a href="#sec-5">5. Customizing the plot</a></li>
+<li><a href="#sec-6">6. Setting mulitple attibuted easily</a></li>
+<li><a href="#sec-7">7. Multiple subplots</a></li>
+<li><a href="#sec-8">8. Adding data to multiple subplots</a></li>
 </ul>
 </div>
 </div>
-<p>
-tags:
-</p>
-<ul class="org-ul">
-<li>python
-</li>
-<li>data visualization
-</li>
-</ul>
-
 <div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1"><span class="section-number-2">1</span> Introduction</h2>
+<h2 id="sec-1"><span class="section-number-2">1</span> Instructions</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-Bokeh &#x662F; python &#x7528;&#x6765;&#x6570;&#x636E;&#x53EF;&#x89C6;&#x5316;&#x7684;&#x4E00;&#x4E2A;&#x5E93;&#xFF0C;&#x4E0D;&#x540C;&#x4E8E; matplotlib&#xFF0C;&#x4ED6;&#x8F93;&#x51FA;&#x7684;&#x56FE;&#x5F62;&#x683C;&#x5F0F;&#x662F; HTML&#xFF0C;&#x7C7B;&#x4F3C;&#x4E8E; d3.js &#x7684;&#x98CE;&#x683C;&#xFF0C;&#x8FD8;&#x53EF;&#x4EE5;&#x7528;&#x6765;&#x4EA4;&#x4E92;&#x4F7F;&#x7528;&#x3002;
+Use the Matplotlib .scatter() method to create a scatter plot with the month on the x-axis and temperature on the y-axis and then display the plot.
 </p>
-</div>
-</div>
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> How to creat Data visualization</h2>
-<div class="outline-text-2" id="text-2">
-<ul class="org-ul">
-<li>&#x51C6;&#x5907;&#x6570;&#x636E;
-</li>
-<li>&#x9009;&#x62E9;&#x4F60;&#x8981;&#x8F93;&#x51FA;&#x7684;&#x6837;&#x5F0F;
-<ul class="org-ul">
-<li>output<sub>file</sub>
-</li>
-<li>output<sub>notebook</sub>
-</li>
-</ul>
-</li>
-<li>&#x5EFA;&#x7ACB; x &#x8F74;&#xFF0C;y &#x8F74;
-</li>
-<li>&#x8F93;&#x51FA;&#x56FE;&#x7247;
-</li>
-</ul>
 <div class="org-src-container">
 
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> bokeh.plotting <span class="keyword">import</span> figure, output_notebook, show</span><br><span class="line"></span><br><span class="line"><span class="comment"># prepare some data</span></span><br><span class="line">x = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]</span><br><span class="line">y = [<span class="number">6</span>, <span class="number">7</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">5</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># output to static HTML file</span></span><br><span class="line">output_notebook()</span><br><span class="line"></span><br><span class="line"><span class="comment"># create a new plot with a title and axis labels</span></span><br><span class="line">p = figure(title=<span class="string">&quot;simple line example&quot;</span>, x_axis_label=<span class="string">&apos;x&apos;</span>, y_axis_label=<span class="string">&apos;y&apos;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># add a line renderer with legend and line thickness</span></span><br><span class="line">p.line(x, y, legend=<span class="string">&quot;Temp.&quot;</span>, line_width=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># show the results</span></span><br><span class="line">show(p)</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">import matplotlib.pyplot as plt
+%matplotlib inline
+
+# 2 simple lists of values
+month = [1,1,2,2,4,5,5,7,8,10,10,11,12,12]
+temperature = [32,15,40,35,50,55,52,80,85,60,57,45,35,105]
+plt.scatter(month, temperature)
+plt.show()</span><br></pre></td></tr></table></figure>
 </div>
 
 
 <div class="figure">
-<p><img src="http://7xkeje.com1.z0.glb.clouddn.com/Screen%20Shot%202016-03-30%20at%204.18.58%20AM.png" alt="Screen%20Shot%202016-03-30%20at%204.18.58%20AM.png">
+<p><img src="file:///tmp/itmi1.png" alt="itmi1.png">
+</p>
+</div>
+
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">fig = plt.figure(figsize=(10,7))
+ax = fig.add_subplot(1,1,1)
+plt.show()
+
+# Print the types
+print(type(fig))
+print(type(ax))</span><br></pre></td></tr></table></figure>
+</div>
+
+<pre class="example">
+&lt;class &apos;matplotlib.figure.Figure&apos;&gt;
+&lt;class &apos;matplotlib.axes._subplots.AxesSubplot&apos;&gt;
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Figures and Subplots</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Figure is the top-level Matplotlib object
+</p>
+<ul class="org-ul">
+<li>The figsize(w,h) w = width , h = height
+</li>
+<li>dpi parameter lets you specify the density, in dotd per inch
+</li>
+<li>.add<sub>subplot</sub>() method lets you add individual plots the Figure instance
+</li>
+</ul>
+<p>
+<b>Subplot</b> is rhe Matplotlib object the you use to create the axes for a plots
+</p>
+<ul class="org-ul">
+<li>call plt.figure() to instance a new Figure instance
+</li>
+<li>assign the Figure to the variable fig
+</li>
+<li>call .add<sub>subplot</sub>(1,1,1) on the Figure instance to add an empty plot
+</li>
+<li>assign the Subplot to the variable ax
+</li>
+<li>call plt.show() to display our wonderful creation
+</li>
+</ul>
+<p>
+You&apos;ll notice we passed 1,1,1 into the Figure&apos;s .add<sub>subplot</sub>() method. This style is called grid notation and you use it to express the layout of plots and which plot you want returned from that function call. You can break grid notation down into the 3 parameters:
+</p>
+</div>
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> add<sub>subplot</sub> &#x4E2D;&#x4E09;&#x4E2A;&#x53C2;&#x6570;&#x7684;&#x542B;&#x4E49;</h3>
+<div class="outline-text-3" id="text-2-1">
+<ul class="org-ul">
+<li>the first parameters refers to the row number 1
+</li>
+<li>the second parameter refers to the column number 2
+</li>
+<li>the third parameter refers to the nth plot in the Figure to be returned
+</li>
+</ul>
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">fig = plt.figure(figsize=(10,7))
+ax = fig.add_subplot(1, 1, 1)
+plt.show()
+
+# Print the types
+print(type(fig))
+print(type(ax))</span><br></pre></td></tr></table></figure>
+</div>
+
+
+<div class="figure">
+<p><img src="file:///tmp/itmi2.png" alt="itmi2.png">
 </p>
 </div>
 </div>
 </div>
+</div>
+
 <div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> Plotting Example</h2>
+<h2 id="sec-3"><span class="section-number-2">3</span> Axes</h2>
 <div class="outline-text-2" id="text-3">
 <div class="org-src-container">
 
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> bokeh.plotting <span class="keyword">import</span> figure, show, output_notebook</span><br></pre></td></tr></table></figure>
-</div>
-<ul class="org-ul">
-<li>Get data
-</li>
-</ul>
-<div class="org-src-container">
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">import numpy as np
+month = [1,1,2,2,4,5,5,7,8,10,10,11,12,12]
+temperature = [32,15,40,35,50,55,52,80,85,60,57,45,35,105]
 
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">df = pd.read_csv(<span class="string">&apos;data/Land_Ocean_Monthly_Anomaly_Average.csv&apos;</span>)</span><br></pre></td></tr></table></figure>
-</div>
-
-<ul class="org-ul">
-<li>Process data
-</li>
-</ul>
-<div class="org-src-container">
-
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">df[<span class="string">&apos;datetime&apos;</span>] = pd.to_datetime(df[<span class="string">&apos;datetime&apos;</span>])</span><br><span class="line">df = df[[<span class="string">&apos;anomaly&apos;</span>,<span class="string">&apos;datetime&apos;</span>]]</span><br><span class="line">df[<span class="string">&apos;moving_average&apos;</span>] = pd.rolling_mean(df[<span class="string">&apos;anomaly&apos;</span>], <span class="number">12</span>)</span><br></pre></td></tr></table></figure>
-</div>
-<ul class="org-ul">
-<li>Output option
-</li>
-</ul>
-<div class="org-src-container">
-
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">output_notebook()</span><br></pre></td></tr></table></figure>
-</div>
-<ul class="org-ul">
-<li>Create your plot
-</li>
-</ul>
-<div class="org-src-container">
-
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">p = figure()</span><br><span class="line">p.line(df[<span class="string">&apos;datetime&apos;</span>], df[<span class="string">&apos;anomaly&apos;</span>])</span><br><span class="line">p.line(df[<span class="string">&apos;datetime&apos;</span>], df[<span class="string">&apos;moving_average&apos;</span>])</span><br></pre></td></tr></table></figure>
-</div>
-<ul class="org-ul">
-<li>show plot
-</li>
-</ul>
-<div class="org-src-container">
-
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">show(p)</span><br></pre></td></tr></table></figure>
+fig = plt.figure()
+ax = fig.add_subplot(1,1,1)
+ax.set_xlim([0,14])
+plt.show()
+fig = plt.figure()
+ax = fig.add_subplot(1,1,1)
+ax.set_xlim([np.min(month), np.max(month)])
+ax.set_ylim([np.min(temperature), np.max(temperature)])
+plt.show()</span><br></pre></td></tr></table></figure>
 </div>
 
 
 <div class="figure">
-<p><img src="http://7xkeje.com1.z0.glb.clouddn.com/Screen%20Shot%202016-03-30%20at%204.17.09%20AM.png" alt="Screen%20Shot%202016-03-30%20at%204.17.09%20AM.png">
+<p><img src="file:///tmp/itmi3.png" alt="itmi3.png">
 </p>
 </div>
 </div>
 </div>
+
 <div id="outline-container-sec-4" class="outline-2">
-<h2 id="sec-4"><span class="section-number-2">4</span> Bokeh Style</h2>
+<h2 id="sec-4"><span class="section-number-2">4</span> Adding data</h2>
 <div class="outline-text-2" id="text-4">
-<p>
-<a href="http://bokeh.pydata.org/en/0.11.1/docs/user_guide/styling.html" target="_blank" rel="external">&#x53C2;&#x8003;&#x8D44;&#x6599;</a>
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">import numpy as np
+
+month = [1,1,2,2,4,5,5,7,8,10,10,11,12,12]
+temperature = [32,15,40,35,50,55,52,80,85,60,57,45,35,105]
+
+fig = plt.figure()
+ax = fig.add_subplot(1,1,1)
+ax.set_xlim([np.min(month),np.max(month)])
+ax.set_ylim([np.min(temperature), np.max(temperature)])
+
+color = &apos;darkblue&apos;
+marker = &apos;v&apos;
+
+# run the .scatter() method, params: color, marker
+ax.scatter(month, temperature, color=color, marker=marker)
+plt.show()</span><br></pre></td></tr></table></figure>
+</div>
+
+
+<div class="figure">
+<p><img src="file:///tmp/itim4.png" alt="itim4.png">
 </p>
 </div>
-<div id="outline-container-sec-4-1" class="outline-3">
-<h3 id="sec-4-1"><span class="section-number-3">4.1</span> figure &#x753B;&#x5E03;</h3>
-<div class="outline-text-3" id="text-4-1">
-<p>
-&#x5B9A;&#x4E49;&#x56FE;&#x7247;&#x7684;&#x5927;&#x5C0F;&#xFF0C;&#x548C;&#x5B9A;&#x4E49; title
-&#x5B9A;&#x4E49; title &#x7684;&#x51FD;&#x6570;&#x662F;
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Customizing the plot</h2>
+<div class="outline-text-2" id="text-5">
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">month = [1,1,2,2,4,5,5,7,8,10,10,11,12,12]
+temperature = [32,15,40,35,50,55,52,80,85,60,57,45,35,105]
+fig = plt.figure()
+ax = fig.add_subplot(1,1,1)
+ax.set_xlim(0,13)
+ax.set_ylim(10, 110)
+ax.set_xlabel(&apos;Month&apos;)
+ax.set_ylabel(&apos;Temperature&apos;)
+ax.set_title(&apos;Year Round Temperature&apos;)
+
+# run the .scatter() method, params: color, marker
+ax.scatter(month, temperature, color=&apos;darkblue&apos;, marker=&apos;o&apos;)
+plt.show()</span><br></pre></td></tr></table></figure>
+</div>
+
+
+<div class="figure">
+<p><img src="file:///tmp/itim4.png" alt="itim4.png">
 </p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Setting mulitple attibuted easily</h2>
+<div class="outline-text-2" id="text-6">
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">month = [1,1,2,2,4,5,5,7,8,10,10,11,12,12]
+temperature = [32,15,40,35,50,55,52,80,85,60,57,45,35,105]
+
+fig = plt.figure()
+ax = fig.add_subplot(1,1,1)
+
+ax.set(xlim=(0,13), ylim=(10,110))
+ax.scatter(month, temperature, color=&apos;darkblue&apos;, marker=&apos;o&apos;) #add xlabel, ylabel, and title
+plt.show()
+ax.set(xlim=(0,13), ylim=(10,110), xlabel=&apos;Month&apos;, ylabel=&apos;Temperature&apos;, title=&apos;2014&apos;)
+ax.scatter(month, temperature, color=&apos;darkblue&apos;, marker=&apos;o&apos;)
+plt.show()</span><br></pre></td></tr></table></figure>
+</div>
+
+
+<div class="figure">
+<p><img src="file:///tmp/itim5.png" alt="itim5.png">
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> Multiple subplots</h2>
+<div class="outline-text-2" id="text-7">
 <ul class="org-ul">
-<li>p.title<sub>text</sub><sub>color</sub>    :title &#x7684;&#x989C;&#x8272;
+<li>fig.add<sub>subplot</sub>(nrows, ncols, plot<sub>number</sub>)
 </li>
-<li>p.title<sub>text</sub><sub>font</sub>     :font name
-</li>
-<li>p.title<sub>text</sub><sub>style</sub>    :font &#x7684; style
-</li>
-<li>p.title<sub>text</sub><sub>baseline</sub> :title &#x7684;&#x4F4D;&#x7F6E;
+<li>ax1 = fig.add<sub>subplot</sub>(2, 1, 1)
+ax2 = fig.add<sub>subplot</sub>(2, 1, 2)
 </li>
 </ul>
+
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">fig = plt.figure()
+ax1 = fig.add_subplot(1,1,1)
+ax2 = fig.add_subplot(2,1,1)</span><br></pre></td></tr></table></figure>
+</div>
+
+
+<div class="figure">
+<p><img src="file:///tmp/it6.png" alt="it6.png">
+</p>
 </div>
 </div>
-<div id="outline-container-sec-4-2" class="outline-3">
-<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Line</h3>
-<div class="outline-text-3" id="text-4-2">
+</div>
+
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> Adding data to multiple subplots</h2>
+<div class="outline-text-2" id="text-8">
+<p>
+Instructions
+</p>
+
+<p>
+Generate a grid of plots, 2 columns by 1 row, with the following attributes:
+</p>
+
 <ul class="org-ul">
-<li>line<sub>color</sub>
+<li>The left plot is a scatter plot with month<sub>2013</sub> on the x-axis and temperature<sub>2013</sub> on the y-axis
 </li>
-<li>line<sub>width</sub>
+<li>The left plot has a title of 2013
 </li>
-<li>line<sub>join</sub>
+<li>The left plot&apos;s dots are darkblue, circular marker (&apos;o&apos;)
 </li>
-<li>line<sub>cap</sub>
+<li>The right plot is a scatter plot with month<sub>2014</sub> on the x-axis and temperature<sub>2014</sub> on the y-axis
+</li>
+<li>The right plot has a title of 2014
+</li>
+<li>The right plot&apos;s dots are darkgreen, circular marker (&apos;o&apos;)
+</li>
+<li>Both plots have the same x and y axes ranges as before (x: 0 to 13, y: 10 to 110)
 </li>
 </ul>
 <p>
-&#x6CE8;&#x610F;&#xFF1A;line &#x7684;&#x53C2;&#x6570;&#x662F;&#x9700;&#x8981;&#x5728; p.line()&#x7684;&#x62EC;&#x53F7;&#x4E2D;&#x7684;&#xFF0C;&#x4E0D;&#x80FD;&#x50CF; title&#xFF0C;&#x53EF;&#x4EE5;&#x53E6;&#x5F00;&#x4E00;&#x4E2A; p.title<sub>color</sub>
+This exercise will help you practice all of the concepts you&apos;ve learned in this lesson.
 </p>
-<ul class="org-ul">
-<li>line &#x7684;&#x683C;&#x5F0F;&#x662F; p.line(line<sub>color</sub> = &quot;&quot;, line<sub>cap</sub> = &quot;&quot;&#x2026;&#x2026;..)
-</li>
-</ul>
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">month_2013 = [1,2,3,4,5,6,7,8,9,10,11,12]
+temperature_2013 = [32,18,40,40,50,45,52,70,85,60,57,45]
+month_2014 = [1,2,3,4,5,6,7,8,9,10,11,12]
+temperature_2014 = [35,28,35,30,40,55,50,71,75,70,67,49]
+month_2013 = [1,2,3,4,5,6,7,8,9,10,11,12]
+temperature_2013 = [32,18,40,40,50,45,52,70,85,60,57,45]
+month_2014 = [1,2,3,4,5,6,7,8,9,10,11,1000]
+temperature_2014 = [35,28,35,30,40,55,50,71,75,70,67,49]
+
+fig = plt.figure()
+ax1 = fig.add_subplot(2,1,1)
+ax2 = fig.add_subplot(2,1,2)
+
+ax1.set(xlim=(0,1000), ylim=(10,110), title=&apos;2013&apos;)
+ax2.set(xlim=(0,13), ylim=(10,110), title=&apos;2014&apos;)
+
+ax1.scatter(month_2013, temperature_2013, color=&apos;darkblue&apos;, marker=&apos;o&apos;)
+ax2.scatter(month_2014, temperature_2014, color=&apos;darkgreen&apos;, marker=&apos;o&apos;)
+
+plt.show()</span><br></pre></td></tr></table></figure>
 </div>
+
+
+<div class="figure">
+<p><img src="file:///tmp/it7.png" alt="it7.png">
+</p>
+</div>
+
+<div class="org-src-container">
+
+<figure class="highlight sh"><table><tr><td class="code"><pre><span class="line">curl -<span class="number">0</span> https://raw.githubusercontent.com/jpatokal/openflights/master/data/routes.dat</span><br></pre></td></tr></table></figure>
+</div>
+
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">import pandas as pd
+
+airlines = pd.read_csv(&apos;airlines.dat&apos;)
+airports = pd.read_csv(&apos;airports.dat&apos;)
+routes  = pd.read_csv(&apos;routes.dat&apos;)</span><br></pre></td></tr></table></figure>
+</div>
+
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">print airports.head()</span><br></pre></td></tr></table></figure>
+</div>
+
+<pre class="example">
+   1                      Goroka      Goroka.1  Papua New Guinea  GKA  AYGA  \
+0  2                      Madang        Madang  Papua New Guinea  MAG  AYMD   
+1  3                 Mount Hagen   Mount Hagen  Papua New Guinea  HGU  AYMH   
+2  4                      Nadzab        Nadzab  Papua New Guinea  LAE  AYNZ   
+3  5  Port Moresby Jacksons Intl  Port Moresby  Papua New Guinea  POM  AYPY   
+4  6                  Wewak Intl         Wewak  Papua New Guinea  WWK  AYWK   
+
+   -6.081689  145.391881  5282  10  U  Pacific/Port_Moresby  
+0  -5.207083  145.788700    20  10  U  Pacific/Port_Moresby  
+1  -5.826789  144.295861  5388  10  U  Pacific/Port_Moresby  
+2  -6.569828  146.726242   239  10  U  Pacific/Port_Moresby  
+3  -9.443383  147.220050   146  10  U  Pacific/Port_Moresby  
+4  -3.583828  143.669186    19  10  U  Pacific/Port_Moresby
+</pre>
 </div>
 </div>
 
@@ -511,16 +666,16 @@ Bokeh &#x662F; python &#x7528;&#x6765;&#x6570;&#x636E;&#x53EF;&#x89C6;&#x5316;&#
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/03/24/resource/" rel="next" title="Data Science Resource">
-                <i class="fa fa-chevron-left"></i> Data Science Resource
+              <a href="/2016/03/30/Boken_basic(1)/" rel="next" title="Bokeh Basic(1)">
+                <i class="fa fa-chevron-left"></i> Bokeh Basic(1)
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/04/03/Introduction to Matplotlib's internals/" rel="prev" title="Introduction to Matplotlib's internals">
-                Introduction to Matplotlib's internals <i class="fa fa-chevron-right"></i>
+              <a href="/2016/04/03/The-little-schemer/" rel="prev" title="The little schemer">
+                The little schemer <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -633,7 +788,7 @@ Bokeh &#x662F; python &#x7528;&#x6765;&#x6570;&#x636E;&#x53EF;&#x89C6;&#x5316;&#
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">Table of Contents</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sec-1"><span class="nav-number">2.</span> <span class="nav-text">1 Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sec-2"><span class="nav-number">3.</span> <span class="nav-text">2 How to creat Data visualization</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sec-3"><span class="nav-number">4.</span> <span class="nav-text">3 Plotting Example</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sec-4"><span class="nav-number">5.</span> <span class="nav-text">4 Bokeh Style</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sec-4-1"><span class="nav-number">5.1.</span> <span class="nav-text">4.1 figure 画布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sec-4-2"><span class="nav-number">5.2.</span> <span class="nav-text">4.2 Line</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">Table of Contents</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sec-1"><span class="nav-number">2.</span> <span class="nav-text">1 Instructions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sec-2"><span class="nav-number">3.</span> <span class="nav-text">2 Figures and Subplots</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sec-2-1"><span class="nav-number">3.1.</span> <span class="nav-text">2.1 addsubplot 中三个参数的含义</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sec-3"><span class="nav-number">4.</span> <span class="nav-text">3 Axes</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sec-4"><span class="nav-number">5.</span> <span class="nav-text">4 Adding data</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sec-5"><span class="nav-number">6.</span> <span class="nav-text">5 Customizing the plot</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sec-6"><span class="nav-number">7.</span> <span class="nav-text">6 Setting mulitple attibuted easily</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sec-7"><span class="nav-number">8.</span> <span class="nav-text">7 Multiple subplots</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sec-8"><span class="nav-number">9.</span> <span class="nav-text">8 Adding data to multiple subplots</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator">
