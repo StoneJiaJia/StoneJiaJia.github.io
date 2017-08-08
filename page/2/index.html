@@ -206,6 +206,175 @@
             
               
                 
+                <a class="post-title-link" href="/2016/03/10/Challenge-Summarizing-data/" itemprop="url">
+                  Challenage:Summarizing data
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-03-10T23:52:59+08:00" content="Mar 10 2016">
+              Mar 10 2016
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. <span class="todo TODO">TODO</span> Introduction</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> <span class="todo TODO">TODO</span> Introduction</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<a href="http://fivethirtyeight.com/features/the-economic-guide-to-picking-a-college-major/" target="_blank" rel="external">To picking a collage Major</a> 
+&#x8BFB;&#x53D6;&#x5168;&#x5E74;&#x9F84;&#x6BB5;&#x7684;&#x548C;&#x8BFB;&#x53D6;&#x6700;&#x8FD1;&#x7684;&#x6BD5;&#x4E1A;&#x7684;&#x7684;&#x6570;&#x636E;
+</p>
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">import pandas as pd
+recent_grads = pd.read_csv(&quot;college-majors/recent-grads.csv&quot;)
+all_ages = pd.read_csv(&quot;college-majors/all-ages.csv&quot;)
+recent_grads.head(5)</span><br></pre></td></tr></table></figure>
+</div>
+
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">print(all_ages[&apos;Major_category&apos;].value_counts().index)</span><br></pre></td></tr></table></figure>
+</div>
+
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">print(recent_grads[&apos;Major_category&apos;].value_counts().index)</span><br></pre></td></tr></table></figure>
+</div>
+
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># All values for Major_category
+print(all_ages[&apos;Major_category&apos;].value_counts().index)
+
+all_ages_major_categories = dict()
+recent_grads_major_categories = dict()
+def calculate_major_cat_totals(df):
+    cats = df[&apos;Major_category&apos;].value_counts().index
+    counts_dictionary = dict()
+
+    for c in cats:
+	major_df = df[df[&quot;Major_category&quot;] == c]
+	total = major_df[&quot;Total&quot;].sum(axis=0)
+	counts_dictionary[c] = total
+
+    return counts_dictionary
+    return major_df
+
+all_ages_major_categories = calculate_major_cat_totals(all_ages)
+recent_grads_major_categories = calculate_major_cat_totals(recent_grads)</span><br></pre></td></tr></table></figure>
+</div>
+
+<div class="org-src-container">
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line"># All majors, common to both DataFrames
+majors = recent_grads[&apos;Major&apos;].value_counts().index
+
+recent_grads_lower_emp_count = 0
+all_ages_lower_emp_count = 0
+for m in majors:
+    recent_grads_row =  recent_grads[recent_grads[&apos;Major&apos;] == m]
+    all_ages_row = all_ages[all_ages[&apos;Major&apos;] == m]
+
+    recent_grads_unemp_rate = recent_grads_row[&apos;Unemployment_rate&apos;].values[0]
+    all_ages_unemp_rate = all_ages_row[&apos;Unemployment_rate&apos;].values[0]
+
+    if recent_grads_unemp_rate &lt; all_ages_unemp_rate:
+	recent_grads_lower_emp_count += 1
+    elif all_ages_unemp_rate &lt; recent_grads_unemp_rate:
+	all_ages_lower_emp_count += 1</span><br></pre></td></tr></table></figure>
+</div>
+
+<p>
+#+RES
+</p>
+</div>
+</div>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/03/05/Data Manipulation With Pandas/" itemprop="url">
                   Data Manipulation With Pandas
                 </a>
@@ -1358,7 +1527,7 @@ rdd = sc.<span class="function"><span class="title">parallelize</span><span clas
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">20</span>
+              <span class="site-state-item-count">21</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
